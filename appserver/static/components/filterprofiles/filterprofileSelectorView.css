@@ -1,0 +1,17 @@
+.filter-actions a {
+    color: #787D87;
+}
+
+.filter-actions {
+    float: right;
+    margin-right: 10px;
+}
+
+.filterlabel {
+    margin-left: 10px;
+    margin-bottom: -21px;
+}
+
+.filterprofile-tooltip {
+    display: inline-block;
+}
