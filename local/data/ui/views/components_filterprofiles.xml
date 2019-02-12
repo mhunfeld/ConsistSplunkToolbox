@@ -1,0 +1,21 @@
+<form>
+  <label>filterprofiles</label>
+  <description>Examples for using filterprofiles lala</description>
+  <fieldset submitButton="false">
+    <input type="multiselect" token="field1">
+      <label>field1</label>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <event>
+        <search>
+          <query>makeresults</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="list.drilldown">none</option>
+      </event>
+    </panel>
+  </row>
+</form>
