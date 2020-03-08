@@ -81,52 +81,5 @@
       </input>
     </panel>
   </row>
-  <row>
-    <panel>
-      <title>Live Search2</title>
-      <input id="region2" type="multiselect" token="region2">
-        <search id="regionSearch2">
-          <!--<query>
-            | inputlookup countryList.csv | search $region2$ name="$currentValueregion$" | dedup region | eval sortKey = if(in(region, $form.region2$), 0, 1) | sort sortKey | fields region
-          </query>-->
-          <query>
-            | inputlookup countryList.csv | search $region2|withoutDefault$ OR region="*$currentValueregion2$*" | dedup region | fields region
-          </query>
-        </search>
-        <label>Kontinent</label>
-        <fieldForValue>region</fieldForValue>
-        <fieldForLabel>region</fieldForLabel>
-        <prefix>(</prefix>
-        <suffix>)</suffix>
-         <valuePrefix>region="</valuePrefix>
-        <valueSuffix>"</valueSuffix>
-        <delimiter> OR </delimiter>
-        <choice value="*">Alle</choice>
-        <default>*</default>
-      </input>
-    </panel>
-     <panel>
-      <!--TODO: leider müssen aktuell fieldForValue und fieldForLabel gleich sein oder inhalte von fieldForLabel müssen sich auch in fieldForValue finden lassen
-      in zukunft sollte die extension aber damit umgehen können. ggf. mit extra konfiguration...
-      -->
-      <input id="country2" type="multiselect" token="country2">
-      <search id="countrySearch2">
-        <query>
-          | inputlookup countryList.csv | search $region2$ AND $country2|withoutDefault$ OR name="*$currentValuecountry2$*" | rename "country-code" as countryCode | fields name | head 10
-        </query>
-      </search>
-        <label>Kontinent</label>
-        <fieldForValue>name</fieldForValue>
-        <fieldForLabel>name</fieldForLabel>
-         <prefix>(</prefix>
-        <suffix>)</suffix>
-         <valuePrefix>name="</valuePrefix>
-        <valueSuffix>"</valueSuffix>
-        <delimiter> OR </delimiter>
-        <choice value="*">Alle</choice>
-        <default>*</default>
-      </input>
-    </panel>
-  </row>
   
 </dashboard>
