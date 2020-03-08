@@ -1,5 +1,5 @@
 <form script="components/timerange-slider/examples/timerangeSlider_main.js" theme="dark">
-  <label>Inputfields</label>
+  <label>Timerange Slider</label>
   <description>Timerange Slider Input</description>
   <fieldset submitButton="true" autoRun="false"></fieldset>
   <row>
@@ -19,18 +19,18 @@
         <default>@24h</default>
       </input>
       <html>
-            <co-timerange-slider token="timeAsComponent_tok">
-                <label>Als WebComponent</label>
-                <min>0</min>
-                <max>96</max>
-                <step>12</step>
-                <defaultValue>24</defaultValue>
-                <prefix>@</prefix>
-                <suffix>h</suffix>
-                <labelPrefix>letzte </labelPrefix>
-                <labelSuffix> Stunden</labelSuffix>
-                <parentElement>customFieldset</parentElement>
-            </co-timerange-slider>
+          <co-timerange-slider token="timeAsComponent_tok">
+              <label>Als WebComponent</label>
+              <min>0</min>
+              <max>96</max>
+              <step>12</step>
+              <defaultValue>24</defaultValue>
+              <prefix>@</prefix>
+              <suffix>h</suffix>
+              <labelPrefix>letzte </labelPrefix>
+              <labelSuffix> Stunden</labelSuffix>
+              <parentElement>customFieldset</parentElement>
+          </co-timerange-slider>
         </html>
     </panel>
   </row>
