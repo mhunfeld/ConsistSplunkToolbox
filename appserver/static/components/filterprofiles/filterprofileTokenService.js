@@ -13,6 +13,10 @@ define([
 	 * @param {String} Tokenvalue
 	 */
 	function setToken(name, value) {
+
+		// if(value === typeof(Object)) {
+
+		// }
 		defaultTokens.set(name, value);
 		submittedTokens.set(name, value);
 	}
@@ -34,7 +38,6 @@ define([
 		this.eventDispatcher.on('filterprofile:activateDefault', this.setDefaultFilter, this);
 
 		// Cached Arrays
-		this.tokens = [];
 		this.inputfields = [];
 		this.noDrilldownFields = [];
 		this.excludedInputs = [];
@@ -50,10 +53,6 @@ define([
 		if(this.inputfields.length === 0) {
 			throw Error("No inputfields found on this dashboard!");
 		}
-
-		this.tokens = _.map(this.inputfields, function(inputfield) {
-			return inputfield.settings.get('token');
-		});
 	}
 
 	FilterprofileTokenHelper.prototype.registerInputfield = function(inputfieldId, isDrilldownField = true) {
@@ -64,12 +63,8 @@ define([
 		this.inputfields.push(inputfield);
 
 		if(!isDrilldownField && this.isDefaultValue(inputfield)) {
-			this.noDrilldownFields.push(inputfield.settings.get('token'));
-			//only form.token is set at drilldown, so we have to ignore this token, too.
 			this.noDrilldownFields.push('form.' + inputfield.settings.get('token'));
 		}
-	
-		_.uniq(this.tokens.push(inputfield.settings.get('token')));
 	}
 
 	FilterprofileTokenHelper.prototype.excludeInputfield = function(inputfieldId) {
@@ -82,6 +77,15 @@ define([
 		} else {
 			this.excludedInputs.push(inputfieldId);
 		}
+	}
+
+	FilterprofileTokenHelper.prototype.addPriorityToInputfield = function(inputfieldId) {
+		var inputfield = mvc.Components.get(inputfieldId);
+
+		if(!inputfield) throw Error("No inputfield with ID " + inputfieldId + "found!");
+	
+		var index = _.indexOf(this.inputfields, inputfield);
+		this.inputfields.unshift(this.inputfields.splice(index, 1)[0]);
 	}
 
 	FilterprofileTokenHelper.prototype.checkIfDrilldown = function() {
@@ -106,20 +110,16 @@ define([
 	}
 
 	FilterprofileTokenHelper.prototype.resetActiveFilter = function() {
-		if(this.activeFilterprofile) {
-			_(this.activeFilterprofile.filters.models).each(function(filter) {
-				unsetToken(filter.get('token'));
-			});
-		}
+		_(this.inputfields).each(function(inputfield) {
+			defaultTokens.unset('form.' + inputfield.settings.get('token'))
+		});
 	}
 
 	FilterprofileTokenHelper.prototype.setActiveFilter = function(selectedFilterprofile) {
+		this.resetActiveFilter();
 		this.activeFilterprofile = selectedFilterprofile;
 		if(selectedFilterprofile) {
 			_(selectedFilterprofile.filters.models).each(function(filter) {
-				if(defaultTokens.get(filter.get('token')) === filter.get('value')) {
-					defaultTokens.trigger('change:' + filter.get('token'));
-				}
 				setToken(filter.get('token'), filter.get('value'));
 			});
 
@@ -127,6 +127,7 @@ define([
 	}
 
 	FilterprofileTokenHelper.prototype.setDefaultFilter = function(selectedFilterprofile, isDrilldown) {
+		//this.resetActiveFilter();
 		this.activeFilterprofile = selectedFilterprofile;
 		if(selectedFilterprofile) {
 			_(selectedFilterprofile.filters.models).each(function(filter) {
@@ -138,18 +139,27 @@ define([
 	}
 
 	FilterprofileTokenHelper.prototype.getFilterValuesFromTokenModel = function(filterprofile) {
-		
-		var filteredDefaultTokens = _.object(_.pairs(defaultTokens.attributes)
-					.filter(function(tokenPair){
-						return _.find(this.tokens, function(relevantToken){
-								return tokenPair[0].includes(relevantToken);
-						}.bind(this));
-					}.bind(this)));
+		_.each(this.inputfields, function(inputfield) {
 
-		return _.reduce(filteredDefaultTokens, function(filterprofile, value, token) {
-			filterprofile.addFilterByToken(token, value);
-			return filterprofile;
-		}.bind(this), filterprofile);
+			var defaultValue = inputfield.settings.get('default');
+			var currentValue = inputfield.val();
+			
+			if (inputfield.options.type === 'time') {
+				var token = 'form.' + inputfield.settings.get('token');
+
+				var earliest = defaultTokens.get(token + ".earliest");
+				filterprofile.addFilterByToken(token + '.earliest', earliest);
+				
+				var latest = defaultTokens.get(token + ".latest");
+				filterprofile.addFilterByToken(token + '.latest', latest);
+			} else if(!_.isEqual(defaultValue, currentValue)) {
+				//nur form.token ins Filterprofil schreiben
+				var token = 'form.' + inputfield.settings.get('token');
+				filterprofile.addFilterByToken(token, currentValue);
+			}
+		});
+
+		return filterprofile;
 	};
 
 	return FilterprofileTokenHelper;

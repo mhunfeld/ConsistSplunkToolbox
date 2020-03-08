@@ -38,6 +38,7 @@ define([
     
         filterprofileSelectorView.render();
     
+        //Umbau auf prototype
 
         return {
             /**
@@ -68,7 +69,20 @@ define([
             excludeInputfield: function(inputfieldSelector) {
                 tokenHelper.excludeInputfield(inputfieldSelector);
                 return this;
+            },
+            //todo
+            //add priority to inputfield
+              /**
+             * adds a priority to an inputfield 
+             * useful if you want to some fields to be set before another to execute changeevents...
+             * @param inputfieldSelector {string} id of splunk-inputfield component for splunkjs-mvc component
+             * @param priority {int} 
+             */
+            addPriorityToInputfield: function(inputfieldSelector) {
+                tokenHelper.addPriorityToInputfield(inputfieldSelector);
+                return this;
             }
+            
         } 
     }
 

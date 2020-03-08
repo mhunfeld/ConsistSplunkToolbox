@@ -5,8 +5,7 @@ define([
     './filterprofileModel.js',
     './addFilterModalView.js',
     './filterprofileService.js',
-    './polyfills.js',
-    'splunkjs/mvc/simplexml/ready!'
+    './polyfills.js'
 ], function (_, SearchManager, utils, FilterprofilModel, AddFilterModal, FilterprofileService) {
 
     /**
@@ -54,7 +53,7 @@ define([
             "id": "filtersearch_test",
             "sample_ratio": null,
             "autostart": true,
-            "search": '| inputlookup ' + this.collection.slice(0, -1) + ' | search _key="' + this.prefix + this.delimiter + '*"',
+            "search": '| inputlookup ' + this.collection + ' | search _key="' + this.prefix + this.delimiter + '*"',
             "cancelOnUnload": true,
             "status_buckets": 0,
             "app": utils.getCurrentApp(),
@@ -91,7 +90,6 @@ define([
         
         this.filterprofileService.addFilterToFilterprofiles(filterprofileAsJson, this.filterprofiles);
 
-        //TODO: mahu prüfen, ob this.defaultprofil noch notwendig ist, wenn es sowieso im Filterprofile gespeichert wrid
         if(this.defaultFilterprofile) {
             this.filterprofileService.setAsDefault(this.filterprofiles[this.defaultFilterprofile]);
             this.eventDispatcher.trigger('filterprofile:activateDefault', this.filterprofiles[this.defaultFilterprofile], this.isDrilldown);
@@ -127,11 +125,14 @@ define([
         
         var isDefault = userInput.isDefault;
 
-        if(this.filterprofiles[userInput.filterprofileName] && !confirm("Achtung! Profil bereits vorhanden. Möchten Sie es überschreiben?")) {
-            return;
-        }
+        if(this.filterprofiles[userInput.filterprofileName]){
+            if(!confirm("Achtung! Profil bereits vorhanden. Möchten Sie es überschreiben?")) {
+                return;
+            } 
+            this.deleteFilterprofile(userInput.filterprofileName ,true);
+        }    
 
-        //TODO: FilterprofileService
+
         var filterprofileProperties = {
             _key: this.prefix + this.delimiter + filterprofileName, 
             related: filterprofileName, 
@@ -151,7 +152,7 @@ define([
         this.changeFilterprofile(filterprofileName);
     }
 
-    FilterprofileStore.prototype.deleteFilterprofile = function(selectedFilterprofileName) {
+    FilterprofileStore.prototype.deleteFilterprofile = function(selectedFilterprofileName, overwrite) {
 
         if (typeof selectedFilterprofileName === "undefined" || selectedFilterprofileName === "") {
             alert("Bitte wählen Sie ein Suchprofil zum löschen aus.");
@@ -160,18 +161,20 @@ define([
         
         var selectedFilterprofile = this.filterprofiles[selectedFilterprofileName];
         
-        if (confirm("Möchten Sie das ausgewählte Suchprofil \"" + selectedFilterprofileName + "\" wirklich löschen?")) {
+        if (overwrite || confirm("Möchten Sie das ausgewählte Suchprofil \"" + selectedFilterprofileName + "\" wirklich löschen?")) {
             this.store.deleteRecord(this.collection, selectedFilterprofile.toJSON());
 
             selectedFilterprofile.filters.each(function(filter) {
                 this.store.deleteRecord(this.collection, filter.toJSON());
             }.bind(this));
             
-            delete this.filterprofiles[selectedFilterprofileName];
-
-            //TODO: mahu 29.10.2018 rename event
-            this.eventDispatcher.trigger('filterprofile:added', _(this.filterprofiles).values());
-            this.changeFilterprofile(undefined);
+            if(!overwrite) {
+                delete this.filterprofiles[selectedFilterprofileName];
+    
+                this.eventDispatcher.trigger('filterprofile:added', _(this.filterprofiles).values());
+                this.changeFilterprofile(undefined);
+            }
+                
         }
     }
 
@@ -205,7 +208,6 @@ define([
 
         var isDefault = input.isDefault;
 
-        //TODO: FilterprofileService mit Deferred
 		reader.onload = function (event) {
 			try {
                 var filterprofileAsJson = JSON.parse(event.target.result);

@@ -4,8 +4,7 @@ define([
     'jquery',
     "splunkjs/mvc/simpleform/input/text",
     "splunkjs/mvc/simpleform/input/checkboxgroup",
-    "css!./addFilterModalView_blue.css",
-    "splunkjs/mvc/simplexml/ready!"
+    "css!./addFilterModalView_blue.css"
 ], function(_, Backbone, $, TextInput, CheckboxGroupInput) {
 
     /**
@@ -40,7 +39,6 @@ define([
         initialize: function(options, eventDispatcher) {
             this.options = options;
             this.childViews = [];
-           //TODO: mahu 27.10.2018 von außen
             $(document.body).append(this.render().el);
 
             this.eventDispatcher = eventDispatcher;

@@ -77,6 +77,8 @@ define([
         toJson: function() {
             return JSON.stringify(this.attributes);
         }
+
+        
     });
 
     return FilterprofileModel;

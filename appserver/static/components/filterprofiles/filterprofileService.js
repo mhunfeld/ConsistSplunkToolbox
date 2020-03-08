@@ -1,16 +1,17 @@
 define([
     'underscore',
-    './filterprofileModel.js',
-    'splunkjs/mvc/simplexml/ready!'
-], function (_, FilterprofilModel) {
+    'splunkjs/mvc',
+    './filterprofileModel.js'
+], function (_, mvc, FilterprofilModel) {
 
     /**
      * Service for managing filterprofiles
      */
     var FilterprofileService = function() {
 
-        this.username = $C.USERNAME;
-        this.dashboard = $(".dashboard-title")[0].textContent;
+        this.username = mvc.Components.get('env').get('user');
+        var dashboardTitle = $(".dashboard-title");
+        this.dashboard = dashboardTitle.length ? dashboardTitle[0].textContent : mvc.Components.get('env').get('page');
 
         this.delimiter = "_";
         this.prefix = this.username + this.delimiter + this.dashboard;
@@ -49,10 +50,9 @@ define([
      * @param {json} filterprofileRows 
      */
     FilterprofileService.prototype.getFilterprofiles = function(filterprofileRows) {
-        var filterprofileRows =_(filterprofileRows).filter(function(filterprofileRow){
+        filterprofileRows =_(filterprofileRows).filter(function(filterprofileRow){
             return  !filterprofileRow._key.includes("isdefaultTok") && filterprofileRow.related === filterprofileRow.value;
-        });
-        
+        });        
 
         var filterprofiles = {};
         var filterprofileModels = _(filterprofileRows).map(function(filterprofileRow){
@@ -75,6 +75,11 @@ define([
     FilterprofileService.prototype.addFilterToFilterprofiles = function(filterprofilesAsJson, filterprofileModels) {
         var filterJsons = _(filterprofilesAsJson).filter(function(filterprofileEntry) {
             return  !filterprofileEntry._key.includes("isdefaultTok") && filterprofileEntry.related !== filterprofileEntry.value;
+        });
+
+        //filter non- form-tokens for backward compatibility of old profiles
+        filterJsons =_(filterJsons).filter(function(filterprofileRow){
+            return  filterprofileRow._key.includes("form.");
         });
 
         _(filterJsons).each(function(filterJson) {
@@ -103,14 +108,15 @@ define([
 
         filterprofile.filters.each(function(filter) {
             exportFilter = filter.clone();
-            //var profilename = exportFilter.get('related');
             var key = exportFilter.get('_key');
-            var tokenname = key.substring((key.indexOf(filterprofileName) + filterprofileName.length));
-            var newKey = this.dashboard + tokenname;
-
-            exportFilter.set('_key', newKey);
-            exportFilter.unset('related');
-            exportFilterprofile.addFilter(exportFilter);
+            if(!key.includes("isdefaultTok")) {
+                var tokenname = key.substring((key.indexOf(filterprofileName) + filterprofileName.length));
+                var newKey = this.dashboard + tokenname;
+    
+                exportFilter.set('_key', newKey);
+                exportFilter.unset('related');
+                exportFilterprofile.addFilter(exportFilter);
+            }
 
         }.bind(this));
         return exportFilterprofile;

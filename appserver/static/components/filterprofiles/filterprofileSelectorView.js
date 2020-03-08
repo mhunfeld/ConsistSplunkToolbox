@@ -42,7 +42,7 @@ define([
          */
         initialize: function(options) {
             this.filterDropdown = new DropdownInput({
-                "showClearButton": true,
+                "showClearButton": false,
                 id: "filterprofile-dropdown"
             });
 

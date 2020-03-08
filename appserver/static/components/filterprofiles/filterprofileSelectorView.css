@@ -15,3 +15,13 @@
 .filterprofile-tooltip {
     display: inline-block;
 }
+
+
+.filterprofileSelector .splunk-choice-input-message {
+    display: none;
+}
+
+#filterprofile-dropdown {
+    margin: 0;
+    padding: 0;
+}

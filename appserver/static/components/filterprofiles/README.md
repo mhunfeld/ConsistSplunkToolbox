@@ -35,8 +35,8 @@ Die fachliche Doku zum Filterprofil befindet sich unter: (confluence...)
     ```JAVASCRIPT
         var filterprofiles = new Filterprofile({
             el: '#in_filterprofile',                            //HTML-Anker
-            collection: 'db_rsi_wi_waf2_kv_filterprofile/',     //Name der KV-Store Collection
-            kvStoreEndpoint: "/servicesNS/nobody/db_rsi_wi_waf2_u/" //Name des KV-Store Endpoints
+            collection: 'db_rsi_wi_waco_kv_filterprofile/',     //Name der KV-Store Collection
+            kvStoreEndpoint: "/servicesNS/nobody/db_rsi_wi_waco_u/" //Name des KV-Store Endpoints
         });
     ```
 

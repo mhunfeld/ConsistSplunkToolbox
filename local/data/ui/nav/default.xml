@@ -1,14 +1,15 @@
 <nav search_view="search">
-  <view name="search" default='true' />
-  <view name="datasets" />
-  <view name="reports" />
-  <view name="alerts" />
+
+  <view name="overview" default="true"/>
   
   <collection label="Components">
+    <view name="components_map"/>
     <view name="components_filterprofiles"/>
+    <view name="components_timerangeSlider"/>
   </collection>
   <collection label="Extensions">
     <view name="extensions_tables"/>
     <view name="extensions_inputs"/>
   </collection>
+  <view name="search"/>
 </nav>
