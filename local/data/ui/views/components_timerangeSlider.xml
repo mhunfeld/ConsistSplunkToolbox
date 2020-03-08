@@ -19,7 +19,7 @@
         <default>@24h</default>
       </input>
       <html>
-          <co-timerange-slider token="timeAsComponent_tok">
+          <co-timerange-slider id="webComponentSlider" token="timeAsComponent_tok">
               <label>Als WebComponent</label>
               <min>0</min>
               <max>96</max>

@@ -1,13 +1,12 @@
 define([
     'jquery',
     'underscore',
-    'backbone',
+    'splunkjs/mvc/simplesplunkview',
     'splunkjs/mvc',
     'css!/static/app/ConsistSplunkToolbox/components/timerange-slider/timeRangeSlider.css'
-], function ($, _, Backbone, mvc) { 
+], function ($, _, SimpleSplunkView, mvc) { 
 
-
-    var TimerangeSlider = Backbone.View.extend({
+    var TimerangeSlider = SimpleSplunkView.extend({
 
         sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="slider" id=<%=id%> />'),
         labelTemplate: _.template('<label><%=label%></label>'),

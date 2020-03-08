@@ -20,7 +20,8 @@ require([
             id: 'my-range-slider',
             token: 'slider_tok',
             prefix: '@',
-            suffix: 'h'
+            suffix: 'h',
+            id: 'js-Component'
         });
         testSlider.render();
 
