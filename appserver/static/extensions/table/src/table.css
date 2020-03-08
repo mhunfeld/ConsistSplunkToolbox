@@ -1,0 +1,3 @@
+.results-table .wrapped-results td, .results-table .wrapped-results th {
+    white-space: pre;
+}

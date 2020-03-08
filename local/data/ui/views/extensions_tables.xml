@@ -1,5 +1,17 @@
-<form>
+<dashboard script="extensions/table/examples/main.js">
   <label>Tables</label>
-  <description>extend Tables</description>
-
-</form>
+  <description>Extendable Tables</description>
+  <row>
+    <panel>
+      <table id="exportableTable">
+        <search>
+          <query>| makeresults count=100 | eval poll=if((random()%5) == 1, "Option A", "Option B")</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="count">$numberOfRowsToken$</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

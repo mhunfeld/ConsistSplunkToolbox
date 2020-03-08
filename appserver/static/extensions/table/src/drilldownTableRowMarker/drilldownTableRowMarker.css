@@ -1,0 +1,18 @@
+tr.drilldown-row td {
+    background-color: #0087b9 !important;
+    color: #fff !important;
+}
+
+tr.drilldown-row a {
+    background-color: #0087b9 !important;
+    color: #fff !important;
+}
+
+
+tr td.drilldown-cell-noborder {
+    border: 0px;
+}
+
+tr th.drilldown-header-noborder {
+    border-bottom: 0px;
+}

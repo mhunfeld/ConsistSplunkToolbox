@@ -1,0 +1,16 @@
+.tableRowCountDiv {
+    margin-top:8px !important;
+    margin-bottom: 30px !important;
+    float: left;
+}
+
+.tableRowCountLabel {
+    margin-right: 5px;
+}
+
+.tableRowCountItem {
+    color: #0087b9;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-decoration: none !important;
+}
