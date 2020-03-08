@@ -48,32 +48,6 @@ require([
             baseSearch: 'regionSearch2',
         });
 
-        var country2 = new Input('country2');
-        country2.smartDefaultValue();
-        country2.livesearch2({
-            baseSearch: 'countrySearch2'
-        });
-
-        class HelloWorld extends HTMLElement {
-            constructor() {
-                super();
-              //  let shadowRoot = this.attachShadow({mode: 'open'});
-
-                let dropdown = new DropdownView({
-                    "showClearButton": false,
-                    id: "filterprofile-dropdown",
-                    choices: [
-                        {name: 'test1', value: 'test1'},
-                        {name: 'test2', value: 'test2'},
-                        {name: 'test3', value: 'test3'}
-                    ]
-                });
-                this.appendChild(dropdown.render().el);
-            }
-        }
-
-        customElements.define('hello-world', HelloWorld);
-
 
        
 });
