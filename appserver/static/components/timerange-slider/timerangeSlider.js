@@ -3,18 +3,18 @@ define([
     'underscore',
     'splunkjs/mvc/simplesplunkview',
     'splunkjs/mvc',
-    'css!/static/app/ConsistSplunkToolbox/components/timerange-slider/timeRangeSlider.css'
+    'css!./timeRangeSlider.css'
 ], function ($, _, SimpleSplunkView, mvc) { 
 
     var TimerangeSlider = SimpleSplunkView.extend({
 
-        sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="slider" id=<%=id%> />'),
+        sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="time-slider" id=<%=id%> />'),
         labelTemplate: _.template('<label><%=label%></label>'),
-        valueLabelTemplate: _.template('<span class="slider-value"><%=labelPrefix%> <%=value%> <%=labelSuffix%></span>'),
+        valueLabelTemplate: _.template('<span class="time-slider-value"><%=labelPrefix%> <%=value%> <%=labelSuffix%></span>'),
 
         tagName: 'div',
         
-        className: 'slidecontainer',
+        className: 'time-slider-container',
 
         defaultTokens: mvc.Components.getInstance('default'),
 

@@ -13,6 +13,6 @@
     -> Liste als Options vorgeben -> wird allerdings nicht von allen Browsern unterstützt
     -> ggf. eigene Umsetzung
     -> range slider (start/ende/duration)
-- als SplunkView bauen, damit timeslider aus der mvc.Components genommen werden kann.
 - WebComponent BaseClass generalisieren (damit es einfach wieder verwendet werden kann)(evtl. mit litElement?)
 - depends (changeAttribute listener)
+- searchWhenChange=true
