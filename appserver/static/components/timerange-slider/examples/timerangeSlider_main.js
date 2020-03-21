@@ -19,8 +19,9 @@ require([
             step:   12,
             id: 'my-range-slider',
             token: 'slider_tok',
-            prefix: '@',
+            prefix: '-@',
             suffix: 'h',
+            theme: 'grey',
             id: 'js-Component'
         });
         testSlider.render();

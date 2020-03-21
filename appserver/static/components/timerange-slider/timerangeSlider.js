@@ -3,14 +3,15 @@ define([
     'underscore',
     'splunkjs/mvc/simplesplunkview',
     'splunkjs/mvc',
+    '../../utils/theme-utils.js',
     'css!./timeRangeSlider.css'
-], function ($, _, SimpleSplunkView, mvc) { 
+], function ($, _, SimpleSplunkView, mvc, themeUtils) { 
 
     var TimerangeSlider = SimpleSplunkView.extend({
 
-        sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="time-slider" id=<%=id%> />'),
+        sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="time-slider <%=theme%>" id=<%=id%> />'),
         labelTemplate: _.template('<label><%=label%></label>'),
-        valueLabelTemplate: _.template('<span class="time-slider-value"><%=labelPrefix%> <%=value%> <%=labelSuffix%></span>'),
+        valueLabelTemplate: _.template('<span class="time-slider-value <%=theme%>"><%=labelPrefix%> <%=value%> <%=labelSuffix%></span>'),
 
         tagName: 'div',
         
@@ -34,7 +35,7 @@ define([
         },
 
         events: {
-            'change .slider': 'onChange'
+            'change .time-slider': 'onChange'
         },
 
         initialize: function(options) {
@@ -42,6 +43,8 @@ define([
             this.token = options.token;
             this.options.value = options.defaultValue;
             this.submitButton = mvc.Components.get('submit');
+
+            this.options.theme = options.theme || themeUtils.getCurrentTheme();
         },
 
         render: function() {
@@ -49,6 +52,7 @@ define([
             this.options.label && this.$el.append(this.labelTemplate(this.options));
             this.$el.append(this.sliderTemplate(this.options));
             this.$el.append(this.valueLabelTemplate(this.options));
+            this.$el.addClass(this.options.theme);
         },
 
         onChange: function(event) {
@@ -84,20 +88,20 @@ define([
             options['id'] = this.getAttribute('id');
             options['token'] = this.getAttribute('token');
 
-            options['label'] = this.getProperty('label');
-            options['min'] = this.getProperty('min');
-            options['max'] = this.getProperty('max');
-            options['defaultValue'] = this.getProperty('defaultValue');
-            options['step'] = this.getProperty('step');
-            options['prefix'] = this.getProperty('prefix');
-            options['suffix'] = this.getProperty('suffix');
-            options['labelPrefix'] = this.getProperty('labelPrefix');
-            options['labelSuffix'] = this.getProperty('labelSuffix');
+            options['label'] = this.getOption('label');
+            options['min'] = this.getOption('min');
+            options['max'] = this.getOption('max');
+            options['defaultValue'] = this.getOption('defaultValue');
+            options['step'] = this.getOption('step');
+            options['prefix'] = this.getOption('prefix');
+            options['suffix'] = this.getOption('suffix');
+            options['labelPrefix'] = this.getOption('labelPrefix');
+            options['labelSuffix'] = this.getOption('labelSuffix');
 
             let timerangeSlider = new TimerangeSlider(options);
 
             timerangeSlider.render();
-            let parentSelector = this.getProperty('parentElement');
+            let parentSelector = this.getOption('parentElement');
             //Workaround, wenn WebComponent mit Splunk-default Inputs genutzt wird
             if(parentSelector) {
                 this.addToParent(parentSelector, timerangeSlider.el);
@@ -115,16 +119,15 @@ define([
             }
         }
 
-        getProperty(propertyName) {
+        getOption(optionName) {
 
-            let propertyList = this.getElementsByTagName(propertyName);
-            //TODO: Fehlerhandling, Meldung an Nutzer, wenn falsche Config
-            if(propertyList.length == 1) {
-                let property = propertyList.item(0);
-                let propertyValue = property.innerText;
-                property.remove();
+            let optionList = this.getElementsByTagName(optionName);
+            if(optionList.length == 1) {
+                let option = optionList.item(0);
+                let optionValue = option.innerText;
+                option.remove();
     
-                return propertyValue;
+                return optionValue;
             }
             return '';
         }

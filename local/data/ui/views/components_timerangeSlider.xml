@@ -1,4 +1,4 @@
-<form script="components/timerange-slider/examples/timerangeSlider_main.js" theme="dark">
+<form script="components/timerange-slider/examples/timerangeSlider_main.js" theme="light">
   <label>Timerange Slider</label>
   <description>Timerange Slider Input</description>
   <fieldset submitButton="true" autoRun="false"></fieldset>
