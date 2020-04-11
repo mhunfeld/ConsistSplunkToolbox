@@ -23,6 +23,7 @@ define([
             this.tokenName = options.tokenName;
             this.submittedTokens = mvc.Components.getInstance("submitted");
             this.defaultTokens = mvc.Components.getInstance("default");
+            this.maxCount = 100;
 
             this.paginatorSelector = this.table + " .splunk-paginator";
 
@@ -40,6 +41,7 @@ define([
                     this.render();
                 }.bind(this));
             }.bind(this));
+            this.render();
         },
        
         events: {
@@ -73,6 +75,11 @@ define([
 
             //Count and Pager problem.
             this.$el.insertBefore(this.paginatorSelector);
+
+            this.$el.find( ".tableRowCountItem" ).removeClass('selected');
+
+            var selected = this.defaultTokens.get(this.tokenName);
+            this.$el.find( ".tableRowCountItem[data-value="+ selected +"]" ).addClass('selected');
         }
     });
 

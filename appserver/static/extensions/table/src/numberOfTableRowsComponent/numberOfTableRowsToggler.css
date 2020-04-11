@@ -1,6 +1,5 @@
 .tableRowCountDiv {
-    margin-top:8px !important;
-    margin-bottom: 30px !important;
+    margin: 3px;
     float: left;
 }
 
@@ -10,7 +9,20 @@
 
 .tableRowCountItem {
     color: #0087b9;
-    margin-right: 3px;
-    margin-left: 3px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 2px 8px;
     text-decoration: none !important;
+    line-height: 20px;
+    display: inline-block;
+}
+
+.tableRowCountItem:hover {
+    background: #f7f8fa;
+}
+
+.tableRowCountItem.selected {
+    color: #006eaa;
+    border: 1px solid #006eaa;
+    background: transparent;
 }

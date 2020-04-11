@@ -1,9 +1,12 @@
 <dashboard script="extensions/table/examples/main.js">
+<init>
+  <set token="numberOfRowsToken">10</set>
+</init>
   <label>Tables</label>
   <description>Extendable Tables</description>
   <row>
     <panel>
-      <table id="exportableTable">
+      <table id="exampleTable">
         <search>
           <query>| makeresults count=100 | eval poll=if((random()%5) == 1, "Option A", "Option B")</query>
           <earliest>-24h@h</earliest>

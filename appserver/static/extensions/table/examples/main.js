@@ -5,7 +5,7 @@ require([
     console.log('test');
     console.log(Table);
 
-    Table('exportableTable').addNumberOfTableRowsToggler('numberOfRowsToken')
+    Table('exampleTable').addNumberOfTableRowsToggler('numberOfRowsToken')
 });
 
 //@ sourceURL=table_main.js
