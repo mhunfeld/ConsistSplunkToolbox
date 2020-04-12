@@ -5,7 +5,7 @@ require([
     console.log('test');
     console.log(Table);
 
-    Table('exampleTable')
+    new Table('exampleTable')
         .addNumberOfTableRowsToggler('numberOfRowsToken')
         .addColumnChooser({
             inputfieldId: 'exampleFields',

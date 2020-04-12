@@ -83,13 +83,16 @@ define([
         }
     });
 
-    return function(tokenName) {
-        new NumberOfTableRowsComponent({
-            table: '#' + this.tableComponent.id,
-            tableComponent: this.tableComponent,
-            tokenName: tokenName
-        });
-
-        return this;
-    };;
+    return {
+        addNumberOfTableRowsToggler: function(tokenName) {
+            new NumberOfTableRowsComponent({
+                table: '#' + this.tableComponent.id,
+                tableComponent: this.tableComponent,
+                tokenName: tokenName
+            });
+    
+            return this;
+        }
+    }
+    
 });

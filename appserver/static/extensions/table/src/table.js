@@ -1,14 +1,13 @@
 define([
+    'underscore',
     'splunkjs/mvc',
-    './renameHeader.js',
     './numberOfTableRowsComponent/numberOfTableRowsToggler.js',
-    './drilldownTableRowMarker/drilldownTableRowMarker.js',
     './tableColumnChooser/tableColumnChooserView.js',
     'css!./table.css',
     'splunkjs/mvc/simplexml/ready!'
-], function (mvc, renameHeader, addNumberOfTableRowsComponent, drilldownTableRowMarker, tableColumnChooser) {
+], function (_, mvc, addNumberOfTableRowsComponent, tableColumnChooser) {
 
-    function table(tableComponentId) {
+    var Table = function(tableComponentId) {
         this.tableComponent =   mvc.Components.get(tableComponentId);
 
         if(!this.tableComponent) {
@@ -18,13 +17,11 @@ define([
         this.tableId = tableComponentId;
         this.tableElement =  this.tableComponent.$el;
 
-        this.renameHeader = renameHeader.bind(this);
-        this.addNumberOfTableRowsToggler = addNumberOfTableRowsComponent.bind(this);
-        this.addDrilldownRowMarker = drilldownTableRowMarker.bind(this);
-        this.addColumnChooser = tableColumnChooser.bind(this);
-
         return this;
     }    
 
-    return table;
+    _.extend(Table.prototype, addNumberOfTableRowsComponent, tableColumnChooser);
+
+
+    return Table;
 });

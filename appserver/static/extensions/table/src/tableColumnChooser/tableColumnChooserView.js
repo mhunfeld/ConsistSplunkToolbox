@@ -176,18 +176,22 @@ define([
 
     var defaultTokens = mvc.Components.getInstance("default");
 
-    return function addTableColumnChooser(options) {
+    return {
 
-        var tableComponent = this.tableComponent || mvc.Components.get(options.table);
-        
-        var tableColumnsDetailToggler = new TableColumnChooserView(options);       
-        var $tableHeader = tableComponent.$el.find('.panel-head');
-        $tableHeader.append(tableColumnsDetailToggler.$el);
-        
-        var  $tableColumnInputfield = $('#' + options.inputfieldId);
-        $tableHeader.after($tableColumnInputfield);
-        
-        return this;
+        addColumnChooser: function(options) {
+    
+            var tableComponent = this.tableComponent || mvc.Components.get(options.table);
+            
+            var tableColumnsDetailToggler = new TableColumnChooserView(options);       
+            var $tableHeader = tableComponent.$el.find('.panel-head');
+            $tableHeader.append(tableColumnsDetailToggler.$el);
+            
+            var  $tableColumnInputfield = $('#' + options.inputfieldId);
+            $tableHeader.after($tableColumnInputfield);
+            
+            return this;
+        }
     }
+    
 
 });
