@@ -24,8 +24,10 @@ require([
         var input2 = new Input('field2');
         input2.sortable();
 
-        var input3 = new Input('field3');
-        input3.applyCopyToClipboard();
+        new Input('field3')
+            .applyCopyToClipboard()
+            .pastable()
+            .refreshable();
 
         var region = new Input('region');
         region.smartDefaultValue();
@@ -36,17 +38,14 @@ require([
         var country = new Input('country');
         country.smartDefaultValue();
         country.livesearch({
-            baseSearch: 'countrySearch',
-            dependencies: [
-                'region'
-                ]
+            baseSearch: 'countrySearch'
         });
 
-        var region2 = new Input('region2');
-        region2.smartDefaultValue();
-        region2.livesearch2({
-            baseSearch: 'regionSearch2',
-        });
+        // var region2 = new Input('region');
+        // region2.smartDefaultValue();
+        // region2.livesearch2({
+        //     baseSearch: 'regionSearch2',
+        // });
 
 
        

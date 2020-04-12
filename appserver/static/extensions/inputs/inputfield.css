@@ -1,26 +1,11 @@
-.copyButton {
-    background-image: url(/static/app/db_rsi_wi_1web_u/icons/content_copy_grey_18x18.png);
-    background-size: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    border-color: transparent;
-    margin-left: 0px;
-    height: 25px;
-    width: 25px;
-    float: none;
-    margin-top: -5px;
+.inputActions {
+    float: right;
+    margin-right: 20px;
 }
 
-.refreshButton {
-    background-image: url(/static/app/db_rsi_wi_1web_u/icons/autorenew_grey_18x18.png);
-    background-size: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
+.inputAction {
     border-color: transparent;
-    margin-left: 0px;
     height: 25px;
     width: 25px;
-    margin-top: -5px;
+    float: right;
 }

@@ -3,7 +3,6 @@ define([
     'underscore',
     'splunkjs/mvc',
     '/static/app/ConsistSplunkToolbox/extensions/inputs/livesearch.js',
-    '/static/app/ConsistSplunkToolbox/extensions/inputs/livesearch2.js',
     'css!/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.css'
 ], function ($, _, mvc, livesearch, livesearch2) { 
 
@@ -82,8 +81,18 @@ define([
 
         var multiBox = this.inputfieldComponent;
 
-        var icons = $('<button class="copyButton"></button>');
-        icons.insertAfter(multiBox.$el.find('label').first());
+        var label = multiBox.$el.find('label').first();
+        label.css('display', 'inline');
+        var icons = $('<span class="copyButton inputAction"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M10 17l-4-4l1.41-1.41L10 14.17l6.59-6.59L18 9m-6-6a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m7 0h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z" fill="#626262"/></svg></span>');
+        
+        var inputActions = multiBox.$el.find('.inputActions');
+        if(inputActions.length == 0) {
+            inputActions = $('<div class="inputActions"></div>');
+            inputActions.insertAfter(label);
+        }
+        inputActions.append(icons);
+        
+     //   icons.insertAfter(multiBox.$el.find('label').first());
         
         icons.mouseover(function () {
             multiBox.$el.find('.splunk-choice-input-message').css('cssText', 'font-size: 12px');
@@ -96,24 +105,23 @@ define([
         
         icons.on("click", function () {
             var selectedValues = multiBox.$el.find('button > div > div');
-            if (selectedValues[1].value != this.defaultValue) {
-                var selectedValuesAsString = "";
-                selectedValues.each(function(){
-                    selectedValuesAsString += $(this).text() + "\n";
-                });
+            var selectedValuesAsString = "";
+            selectedValues.each(function(){
+                selectedValuesAsString += $(this).text() + "\n";
+            });
 
-                var clipboardArea = document.createElement("textarea");
-                document.body.appendChild(clipboardArea);
-                clipboardArea.value = selectedValuesAsString;
-                clipboardArea.select();
-                document.execCommand("copy");
-                document.body.removeChild(clipboardArea);
-            }
+            var clipboardArea = document.createElement("textarea");
+            document.body.appendChild(clipboardArea);
+            clipboardArea.value = selectedValuesAsString;
+            clipboardArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(clipboardArea);
         }.bind(this));
 
         return this;
     }
-
+    
+    
     inputfield.prototype.pastable = function(){
         var multiSelectBox = this.inputfieldComponent;
         
@@ -128,23 +136,6 @@ define([
             pastedData = pastedData.trim().replace(/:/g, ",");
             pastedData = pastedData.trim().replace(/-/g, "");
             pastedData = pastedData.trim().replace(/[\s]+/g, "");
-            
-            //Validation
-            var reg = new RegExp('^(?:[0-9-*\s,]*$)');
-            
-            if (!pastedData.match(reg)){
-                alert("Ungültige Wagennummer (Es müssen genau 12 Zahlen sein !!) : " + pastedData);
-                return false;
-            }
-            
-            var splittedDataCheck = pastedData.split(",");
-            for (var i=0;i<splittedDataCheck.length;i++){
-                var n = splittedDataCheck[i].indexOf("*");
-                if (n == -1 && splittedDataCheck[i].length != 12){
-                    alert("Ungültige Wagennummer (Es müssen genau 12 Zahlen, oder die Wildcard * vorhanden sein !!) : " + splittedDataCheck[i]);
-                    return false;
-                }
-            } 
 
             //merge old and pasted data
             var splittedDataAlt = pastedData.split(',');
@@ -166,13 +157,14 @@ define([
     inputfield.prototype.refreshable = function () {
         
         var multiBox = this.inputfieldComponent;
-        multiBox.$el.find("label").css("cssText", "display:inline-block");
+        var label = multiBox.$el.find("label").first();
+        label.css("cssText", "display:inline");
         
-        var icons = $('<button class="refreshButton"></button>');
+        var icons = $('<span class="refreshButton inputAction"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>');
         
         icons.mouseover(function () {
             multiBox.$el.find('.splunk-choice-input-message').css('cssText', 'font-size: 12px');
-            multiBox.$el.find('.splunk-choice-input-message').text("Zurücksetzen auf Alle");
+            multiBox.$el.find('.splunk-choice-input-message').text("Zurücksetzen auf Default-Wert");
         });
         
         icons.mouseout(function () {
@@ -185,7 +177,12 @@ define([
             multiBox.val(defaultValue);
         });
 
-        icons.insertAfter(multiBox.$el.find('label').first());
+        var inputActions = multiBox.$el.find('.inputActions');
+        if(inputActions.length == 0) {
+            inputActions = $('<div class="inputActions"></div>');
+            inputActions.insertAfter(label);
+        }
+        inputActions.append(icons);
 
         return this;
     }
@@ -208,9 +205,7 @@ define([
         return this;
     }
 
-    inputfield.prototype.livesearch = livesearch;
-
-    inputfield.prototype.livesearch2 = livesearch2;
+    _.extend(inputfield.prototype, livesearch);
 
     return inputfield;
 

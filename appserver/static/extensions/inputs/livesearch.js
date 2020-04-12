@@ -222,40 +222,44 @@ define([ 'jquery',
     }
 
 
-    return function livesearch(options) {
+    return {
 
-        this.livesearchField = new MultiValueLivesearchField(this.inputfieldComponent, this.currentValueTokenName);
-        this.inputSearchManager = new InputfieldSubsearch(options.baseSearch, this.currentValueTokenName, this.inputfieldComponent, options.dependencies);
-
-        //Da results.on(data) nicht feuert, wenn es keine Ergebnisse gibt, 
-        //brauchen wir diese sonderfall behandlung :(
-        this.inputSearchManager.on('search:done', function(state, job){
-            if(state.content.resultCount == 0 || !this.searchResults.hasData()) {
-                this.livesearchField.setChoices([]);
-            }
-        }.bind(this));
-
-        this.searchResults = this.inputSearchManager.data('preview', {
-            output_mode: 'json',
-            count: (this.livesearchField.getNumberOfSelectedValues() + 10) 
-        });
-        
-        this.searchResults.on("data", function(results){
-            var newChoices = this.searchResults.hasData() ? this.searchResults.data().results.slice() : [];
-            this.livesearchField.setChoices(newChoices)
-        }, this);
-
-
-        this.livesearchField.inputfieldComponent.on('change', function() {
-            this.searchResults.set("count", this.livesearchField.getNumberOfSelectedValues() + 10);
-            this.livesearchField.currentValue = '';
-            var innerInputField = this.livesearchField.inputfieldComponent.$el.find('input');
-            innerInputField.val('');
-            defaultTokens.set(this.currentValueTokenName, "*");
-            submittedTokens.set(this.currentValueTokenName, "*");
-        }, this);
-     
-        return this;
+        livesearch: function livesearch(options) {
+    
+            this.livesearchField = new MultiValueLivesearchField(this.inputfieldComponent, this.currentValueTokenName);
+            this.inputSearchManager = new InputfieldSubsearch(options.baseSearch, this.currentValueTokenName, this.inputfieldComponent, options.dependencies);
+    
+            //Da results.on(data) nicht feuert, wenn es keine Ergebnisse gibt, 
+            //brauchen wir diese sonderfall behandlung :(
+            this.inputSearchManager.on('search:done', function(state, job){
+                if(state.content.resultCount == 0 || !this.searchResults.hasData()) {
+                    this.livesearchField.setChoices([]);
+                }
+            }.bind(this));
+    
+            this.searchResults = this.inputSearchManager.data('preview', {
+                output_mode: 'json',
+                count: (this.livesearchField.getNumberOfSelectedValues() + 10) 
+            });
+            
+            this.searchResults.on("data", function(results){
+                var newChoices = this.searchResults.hasData() ? this.searchResults.data().results.slice() : [];
+                this.livesearchField.setChoices(newChoices)
+            }, this);
+    
+    
+            this.livesearchField.inputfieldComponent.on('change', function() {
+                this.searchResults.set("count", this.livesearchField.getNumberOfSelectedValues() + 10);
+                this.livesearchField.currentValue = '';
+                var innerInputField = this.livesearchField.inputfieldComponent.$el.find('input');
+                innerInputField.val('');
+                defaultTokens.set(this.currentValueTokenName, "*");
+                submittedTokens.set(this.currentValueTokenName, "*");
+            }, this);
+         
+            return this;
+        }
     }
+    
 });
 
