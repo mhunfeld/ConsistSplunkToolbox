@@ -7,11 +7,11 @@
       <title>Smart DefaultValue</title>
       <input id="field1" type="multiselect" token="field1">
         <label>Field 1</label>
-        <choice value="value1">Wert 1</choice>
+        <choice value="*">Alle</choice>
         <choice value="value2">Wert 2</choice>
         <choice value="value3">Wert 3</choice>
         <choice value="value4">Wert 4</choice>
-        <default>value1</default>
+        <default>*</default>
       </input>
     </panel>
     <panel>
@@ -61,14 +61,14 @@
      <panel>
       <search id="countrySearch">
         <query>
-          | inputlookup countryList.csv | rename "country-code" as countryCode| fields region name countryCode
+          | inputlookup countryList.csv | search $region$ | rename "country-code" as countryCode| fields name countryCode
         </query>
       </search>
       <!--TODO: leider müssen aktuell fieldForValue und fieldForLabel gleich sein oder inhalte von fieldForLabel müssen sich auch in fieldForValue finden lassen
       in zukunft sollte die extension aber damit umgehen können. ggf. mit extra konfiguration...
       -->
       <input id="country" type="multiselect" token="country">
-        <label>Kontinent</label>
+        <label>Land</label>
         <fieldForValue>name</fieldForValue>
         <fieldForLabel>name</fieldForLabel>
          <prefix>(</prefix>
