@@ -1,3 +1,11 @@
+.edit-column {
+    width: 20px; 
+    height: 20px;
+    padding: 5px; 
+    fill: #3c444d;
+    opacity: 75%;
+}
+
 .tableColumnSelector {
     float: right;
     margin-right: 10px;
@@ -5,5 +13,6 @@
 }
 
 .fullWidth {
-    width: 100% !important;
+    width: calc(100% - 10px) !important;
+    padding: 0 5px;
 }

@@ -6,9 +6,25 @@
   <description>Extendable Tables</description>
   <row>
     <panel>
+      <input id="exampleFields" type="multiselect" token="exampleFields">
+        <label>Field 3</label>
+        <choice value="field1">Feld 1</choice>
+        <choice value="field2">Feld 2</choice>
+        <choice value="field3">Feld 3</choice>
+        <choice value="field4">Feld 4</choice>
+        <default>field1,field2</default>
+        <prefix>| table </prefix>
+      </input>
       <table id="exampleTable">
         <search>
-          <query>| makeresults count=100 | eval poll=if((random()%5) == 1, "Option A", "Option B")</query>
+          <query>
+            | makeresults count=100 
+            | eval field1=if((random()%3) == 1, "Option A", "Option B") 
+            | eval field2=if((random()%5) == 1, "Option A", "Option B") 
+            | eval field3=if((random()%3) == 1, "Option A", "Option B")
+            | eval field4=if((random()%2) == 1, "Option A", "Option B") 
+            $exampleFields$
+          </query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
