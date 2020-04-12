@@ -7,19 +7,19 @@ define([
 
     /**
     * Show and hide selected columns of a table.
-    * The settings are stored in the cookie on the user page and are available the next time the page is loaded.
-    * Dashboard examples with tableColumnChooser in use: db_rsi_wi_waco_u
+    * The settings could be stored in the cookie on the user page and are available the next time the page is loaded.
     * 
     * @param {Object} options - Settings for TableColumnChooser.
     * @param {string} options.token - Name of token for selected columns. Used in searchresult of connected table.
     * @param {string} options.cookieName - Name of cookie, where settings should be stored
-    * @param {string} options.inputFieldHtmlId - Html-Id of simpleXML multi-select inputfield 
+    * @param {string} options.inputfieldId -Id of simpleXML multi-select inputfield 
+    * @param {string} options.sortable - selction of columns is sortable per drag and drop in inputfield
     * 
     * Example Instantiation in JS:
     * var tableColumnsDetailToggler = new TableColumnChooserView({
     *        token: 'form.tableColumnsDetail_tok', 
     *        cookieName: 'tableColumnsDetail_cookie', 
-    *        inputFieldHtmlId: '#in_tableColumnsDetail'
+    *        inputfieldId: 'in_tableColumnsDetail'
     *    });
     * 
     * Example SimpleXML:
@@ -36,16 +36,13 @@ define([
     * </input>
     * 
     * Search-Command: 
-    * <query>... | eval Zeitstempel=_time          
-    *     | eval Beladestatus = Beladestatus.case(source_loadstatus=="Sensor",", seit ".if(loadstatus_lastChange="Unbekannt","Unbekannt",strftime(strptime(loadstatus_lastChange, `db_rsi_wi_1src_ma_eventTimeFormat`), "%d.%m.%Y %H:%M")),source_loadstatus=="FLO-LSO",", Information vom ".if(base_wgfTimestamp="Unbekannt","Unbekannt",strftime(strptime(base_wgfTimestamp, `db_rsi_wi_1src_ma_eventTimeFormat`), "%d.%m.%Y %H:%M")),1=1,", ")." (Quelle: ".source_loadstatus.")", Bewegungsstatus = Bewegungsstatus." seit ".if(moveState_lastChange="Unbekannt","Unbekannt",strftime(strptime(moveState_lastChange, `db_rsi_wi_1src_ma_eventTimeFormat`), "%d.%m.%Y %H:%M"))
-    *     | fieldformat Zeitstempel = strftime(Zeitstempel, `db_rsi_wi_1src_ma_fieldformatTimeFormat`)
-    *       $tableColumnsDetail_tok$</query>                                  <-- use token with table-command here in search-command
+    * <query>
+    *       ... 
+    *       $tableColumnsDetail_tok$                                  <-- use token with table-command here in search-command
+    * </query>
     * 
     */
     var TableColumnChooserView = Backbone.View.extend({
-            
-        // togglerTemplate: _.template('<a class="tableEdit">Tabelle bearbeiten</a>\
-        //                   <a class="tableClose" style="display:none">Tabelle schliessen</a>'),
 
         togglerTemplate: _.template('<div class="edit-column">\
             <a class="tableClose">\
@@ -69,26 +66,36 @@ define([
         className: 'tableColumnSelector',
 
         initialize: function(options) {
-            this.cookieName = options.cookieName;
-
-            this.inputFieldHtmlId = '#' + options.inputfieldId;
-            
             this.inputfield = mvc.Components.get(options.inputfieldId);
-
+            
             if(!this.inputfield) {
                 console.error('no inputfield found with id: ' + options.inputfieldId);
                 return;
             }
-
+            
             this.inputfield.$el.hide();
-
-            
-            
             this.tokenName = 'form.' + this.inputfield.settings.get('token');
+            
+            if(options.sortable) {
+                this.sortable();
+            }
 
-            this.sortable();
-
+            if(options.cookieName) {
+                this.addCookieHandler(options.cookieName);
+            }
+            
             this.render();
+        },
+
+        addCookieHandler: function(cookieName) {
+
+            this.inputfield.on('change', function() {
+                var selectedValue = this.inputfield.val();
+                this.setCookie(cookieName, selectedValue);
+            }, this);
+
+            var cookieValue = this.getCookie(cookieName);
+            this.inputfield.val(cookieValue);
         },
 
         sortable: function () {
@@ -126,6 +133,44 @@ define([
             //this.inputfield.$el.find('div').addClass('fullWidth');
             this.inputfield.$el.find('[data-test="multiselect"]').addClass('fullWidth');
             return this;
+        },
+
+        getCookie: function(cookieName) {
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                // write cookie content to tokens
+                if (c.indexOf(cookieName + "=") == 0) {
+                    return c.substring(c.indexOf("=") + 1).split(',');
+                }
+            }
+        },
+
+        setCookie: function(cookieName, cookieValue) {
+            document.cookie = cookieName + "=" + cookieValue + ";" + this.getExpiryDate() + ";path=" + this.getCurrentPath();
+        },
+
+        getExpiryDate: function() {
+            var exdays = 90;
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+
+            return expires;
+        },
+
+        getCurrentPath: function() {
+            var envTokenModel = splunkjs.mvc.Components.get('env');
+
+            var appName = envTokenModel.get('app');
+            var locale = envTokenModel.get('locale');
+
+            var path =  locale + '/app/' + appName;
+            
+            return path;
         }
     });
 

@@ -8,7 +8,9 @@ require([
     Table('exampleTable')
         .addNumberOfTableRowsToggler('numberOfRowsToken')
         .addColumnChooser({
-            inputfieldId: 'exampleFields'
+            inputfieldId: 'exampleFields',
+            sortable: true,
+            cookieName: 'exampleTableColumns'
         })
 });
 
