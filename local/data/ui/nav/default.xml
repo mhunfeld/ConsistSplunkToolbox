@@ -11,5 +11,20 @@
     <view name="extensions_tables"/>
     <view name="extensions_inputs"/>
   </collection>
+  <collection label="Visualizations">
+    <view name="extensions_tables"/>
+    <view name="extensions_inputs"/>
+  </collection>
+  <collection label="Snippets">
+    <view name="extensions_tables"/>
+    <view name="extensions_inputs"/>
+  </collection>
+  <collection label="HTML">
+    <view name="testdashboard"/>
+  </collection>
+  <collection label="Web Components">
+    <view name="extensions_tables"/>
+    <view name="extensions_inputs"/>
+  </collection>
   <view name="search"/>
 </nav>
