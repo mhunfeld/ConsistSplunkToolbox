@@ -18,7 +18,7 @@
     opacity: 1;
   }
   
-  .time-slider::-webkit-slider-thumb, .time-slider::-moz-range-thumb, .time-slider::-ms-thumb {
+  .time-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 25px;

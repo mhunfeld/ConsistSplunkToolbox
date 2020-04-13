@@ -2,6 +2,7 @@ require([
     'underscore',
     'jquery',
     '/static/app/ConsistSplunkToolbox/components/timerange-slider/timerangeSlider.js',
+    '/static/app/ConsistSplunkToolbox/components/timerange-slider/timerangeSlideWebcomponent.js',
     '/static/app/ConsistSplunkToolbox/utils/showtokens.js',
     'splunkjs/mvc/simplexml/ready!'
 ], function( 
@@ -20,13 +21,16 @@ require([
             id: 'my-range-slider',
             token: 'slider_tok',
             prefix: '-@',
-            suffix: 'h',
-            theme: 'grey',
+            suffix: '$timeUnit$',
+            labelPrefix: 'letzte ',
+            labelSuffix: '$labelSuffix$',
             id: 'js-Component'
-        });
+        }, {tokens: true});
         testSlider.render();
 
         $('#customFieldset .fieldset').append(testSlider.el);
 
 
     });
+
+    //@ sourceURL=timerangeslider_main.js

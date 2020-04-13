@@ -1,13 +1,13 @@
 define([
     'jquery',
     'underscore',
-    'splunkjs/mvc/simplesplunkview',
+    'splunkjs/mvc/baseinputview',
     'splunkjs/mvc',
     '../../utils/theme-utils.js',
     'css!./timeRangeSlider.css'
-], function ($, _, SimpleSplunkView, mvc, themeUtils) { 
+], function ($, _, BaseInputView, mvc, themeUtils) { 
 
-    var TimerangeSlider = SimpleSplunkView.extend({
+    var TimerangeSlider = BaseInputView.extend({
 
         sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="time-slider <%=theme%>" id=<%=id%> />'),
         labelTemplate: _.template('<label><%=label%></label>'),
@@ -31,7 +31,7 @@ define([
             'prefix': '',
             'suffix': '',
             'labelPrefix': '',
-            'labelSuffix': '',
+            'labelSuffix': ''
         },
 
         events: {
@@ -40,33 +40,38 @@ define([
 
         initialize: function(options) {
             this.options = _.extend({}, this.defaultOptions, options);
-            this.token = options.token;
             this.options.value = options.defaultValue;
-            this.submitButton = mvc.Components.get('submit');
-
             this.options.theme = options.theme || themeUtils.getCurrentTheme();
+
+            TimerangeSlider.__super__.initialize.apply(this, arguments);
+
+            this.token = options.token;
+            this.submitButton = mvc.Components.get('submit');
         },
 
         render: function() {
+            console.log('render');
             this.$el.empty();
-            this.options.label && this.$el.append(this.labelTemplate(this.options));
-            this.$el.append(this.sliderTemplate(this.options));
-            this.$el.append(this.valueLabelTemplate(this.options));
-            this.$el.addClass(this.options.theme);
+            this.settings.get('label') && this.$el.append(this.labelTemplate(this.settings.attributes));
+            this.$el.append(this.sliderTemplate(this.settings.attributes));
+            this.$el.append(this.valueLabelTemplate(this.settings.attributes));
+            this.$el.addClass(this.settings.get('theme'));
+            this.$el.find('.time-slider').trigger('change');
         },
 
         onChange: function(event) {
+            console.log('change');
             var selectedValue = $(event.currentTarget).val();
-            var tokenValue = this.options.prefix + selectedValue + this.options.suffix; 
+            var tokenValue = this.settings.get('prefix') + selectedValue + this.settings.get('suffix'); 
             this.defaultTokens.set(this.token, tokenValue);
-            this.defaultTokens.set('form.' + this.token,tokenValue);
+            this.defaultTokens.set('form.' + this.token, tokenValue);
 
             if(!this.submitButton) {
                 this.submitTokens(tokenValue);
             }
 
-            this.options.value = selectedValue;
-            this.render();
+            this.settings.set('value', selectedValue);
+           // this.render();
         }, 
 
         submitTokens: function(selectedValue) {
@@ -78,62 +83,6 @@ define([
         }
 
     });
-
-
-    class TimerangeSliderElement extends HTMLElement {
-        constructor() {
-            super();
-            let options = {};
-
-            options['id'] = this.getAttribute('id');
-            options['token'] = this.getAttribute('token');
-
-            options['label'] = this.getOption('label');
-            options['min'] = this.getOption('min');
-            options['max'] = this.getOption('max');
-            options['defaultValue'] = this.getOption('defaultValue');
-            options['step'] = this.getOption('step');
-            options['prefix'] = this.getOption('prefix');
-            options['suffix'] = this.getOption('suffix');
-            options['labelPrefix'] = this.getOption('labelPrefix');
-            options['labelSuffix'] = this.getOption('labelSuffix');
-
-            let timerangeSlider = new TimerangeSlider(options);
-
-            timerangeSlider.render();
-            let parentSelector = this.getOption('parentElement');
-            //Workaround, wenn WebComponent mit Splunk-default Inputs genutzt wird
-            if(parentSelector) {
-                this.addToParent(parentSelector, timerangeSlider.el);
-            } else {
-                this.appendChild(timerangeSlider.el);
-            }
-        }
-
-        addToParent(parentSelector, element) {
-            if(parentSelector) {
-                let parent = document.getElementById(parentSelector);
-                if(parent) {
-                    parent.firstElementChild.getElementsByClassName('fieldset').item(0).append(element);
-                }
-            }
-        }
-
-        getOption(optionName) {
-
-            let optionList = this.getElementsByTagName(optionName);
-            if(optionList.length == 1) {
-                let option = optionList.item(0);
-                let optionValue = option.innerText;
-                option.remove();
-    
-                return optionValue;
-            }
-            return '';
-        }
-    }
-
-    customElements.define('co-timerange-slider', TimerangeSliderElement);
 
     return TimerangeSlider;
 
