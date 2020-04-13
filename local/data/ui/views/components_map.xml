@@ -1,0 +1,4 @@
+<dashboard script="components/filterprofiles/examples/filterprofile_main.js" stylesheet="components/filterprofiles/examples/filterprofileMain.css" theme="dark">
+  <label>Maps</label>
+  <description>Examples for using maps</description>
+</dashboard>
