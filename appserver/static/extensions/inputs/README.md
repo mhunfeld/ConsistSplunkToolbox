@@ -101,26 +101,18 @@ Wenn das Suchergebnis für die Multiselect Box eine sehr große Ergebnismenge ha
 Es werden zunächst nur die ersten 10 Treffer angezeigt und kann mit der Eingabe eine Suchbergriffs weiter spezifiert werden.
 Die Subsuche für die Inputfelder greift auf die Felder fieldForValue und fieldForLabel im SimpleXML zu. In diesen Feldern sollte das Ergebnis der Subsuche stehen.
 
-Außerdem können abhängige Multivalue Felder hinzugefügt werden. Damit kann das Suchergebnis zusätzlich auf die dort ausgewählten Einträge
-beschränkt werden. Damit die Filterung der Suchergebnisse funktioniert, muss die Basis-Suche auch mit dem Token-String des anderen Inputs umgehen können. Das heißt, die Basis-Suche für ein Wagennummer-Inputfeld sollte nicht nur die Wagennummern zurückgeben, sondern muss auch die Felder für die Abhängigkeiten im Bauch haben.
-
 ### parameters:
 
 | parameter           | type               | optional | description                           |
 | ---------           | -------------------| ---------| --------------------------------------|
 | `baseSearch`        | string             | false    | ID of the base search |
-| `dependencies`      | array of strings   | true     | if the multivalue field should limit its results to selected value of another field |
 
 ### use:
 ```javascript
     require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
         var input = new Input('nameOfInput');
         input.livesearch({
-            baseSearch: 'baseSearch',
-            depedencies: [
-                'field1', 
-                'field2'
-                ]
+            baseSearch: 'baseSearch'
         });
     });
 ```
