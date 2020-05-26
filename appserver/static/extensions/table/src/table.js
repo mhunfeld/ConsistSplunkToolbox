@@ -3,9 +3,10 @@ define([
     'splunkjs/mvc',
     './numberOfTableRowsComponent/numberOfTableRowsToggler.js',
     './tableColumnChooser/tableColumnChooserView.js',
+    './fixedColumn/fixedColumn.js',
     'css!./table.css',
     'splunkjs/mvc/simplexml/ready!'
-], function (_, mvc, addNumberOfTableRowsComponent, tableColumnChooser) {
+], function (_, mvc, addNumberOfTableRowsComponent, tableColumnChooser, fixedColumn) {
 
     var Table = function(tableComponentId) {
         this.tableComponent =   mvc.Components.get(tableComponentId);
@@ -20,7 +21,7 @@ define([
         return this;
     }    
 
-    _.extend(Table.prototype, addNumberOfTableRowsComponent, tableColumnChooser);
+    _.extend(Table.prototype, addNumberOfTableRowsComponent, tableColumnChooser, fixedColumn);
 
 
     return Table;
