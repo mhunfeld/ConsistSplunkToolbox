@@ -21,6 +21,7 @@
   </collection>
   <collection label="HTML">
     <view name="testdashboard"/>
+    <view name="datatables"/>
   </collection>
   <collection label="Web Components">
     <view name="extensions_tables"/>

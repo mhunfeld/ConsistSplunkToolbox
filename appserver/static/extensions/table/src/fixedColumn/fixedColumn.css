@@ -1,6 +1,7 @@
 td.fixedColumn {
   position: -webkit-sticky; /* for Safari */
   position: sticky;
+  
   left: 0;
   border-right: 1px solid #000 !important;
 }
@@ -10,6 +11,26 @@ th.fixedColumn {
   z-index: 1;
   position: -webkit-sticky; /* for Safari */
   position: sticky !important;
+  
+  top: 0;
+  border-right: 1px solid #000 !important;
+}
+
+
+#idOfTable td:first-child {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  position: fixed; 
+  left: 0;
+  border-right: 1px solid #000 !important;
+}
+
+#ifOfTable th:first-child {
+  left: 0;
+  z-index: 1;
+  position: -webkit-sticky; /* for Safari */
+  position: sticky !important;
+  position: fixed !important; 
   top: 0;
   border-right: 1px solid #000 !important;
 }

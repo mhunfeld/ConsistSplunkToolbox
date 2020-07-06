@@ -132,7 +132,28 @@ ___
 
 ### use: 
 
+
 ___
+## addFixedColumn
+
+freezes first column of table
+
+![fixed first column](./screenshots/fixedColumns.PNG)
+
+### use: 
+
+
+```javascript
+    require(['/static/app/db_rsi_wi_1web_u/table/table.js'], function(Table) {
+
+        var table = new Table('nameOfTable');
+
+        table.addFixedColumn();
+    });
+```
+
+___
+
 # TODO
 
 - toggle number of table rows: make steps configurable, default "10 25 50 100"
