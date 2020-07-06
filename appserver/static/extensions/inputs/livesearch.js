@@ -37,12 +37,13 @@ define([ 'jquery',
             var tokenName = inputfieldSettings.get('token');
             
             //add current value from inputfield to search
-            var inputFieldSearchByValueString = '|search ' + valueField + '="*$' + currentValueTokenName + '$*" ';
-            var inputFieldSearchByLabelString = '|search ' + labelField + '="*$' + currentValueTokenName + '$*" ';
+            var inputFieldSearchByValueString = valueField + '="*$' + currentValueTokenName + '$*" ';
+            var inputFieldSearchByLabelString = labelField + '="*$' + currentValueTokenName + '$*" ';
 
-            var inputFieldSearchString = searchByValueField ? inputFieldSearchByValueString : '';
-            inputFieldSearchString = searchByValueField && searchByLabelField ? inputFieldSearchString + ' OR ' : inputFieldSearchString;
-            inputFieldSearchString = searchByLabelField ? inputFieldSearchString + inputFieldSearchByLabelString : inputFieldSearchString;
+            var inputFieldSearchString = '|search ';
+            inputFieldSearchString += searchByValueField ? inputFieldSearchByValueString : '';
+            inputFieldSearchString += searchByValueField && searchByLabelField ? ' OR ' : '';
+            inputFieldSearchString += searchByLabelField ? inputFieldSearchByLabelString : '';
             
 
             
