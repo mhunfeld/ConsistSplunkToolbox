@@ -29,6 +29,7 @@ require([
             .pastable()
             .refreshable();
 
+
         var region = new Input('region');
         region.smartDefaultValue();
         region.livesearch({
@@ -38,16 +39,9 @@ require([
         var country = new Input('country');
         country.smartDefaultValue();
         country.livesearch({
-            baseSearch: 'countrySearch'
+            baseSearch: 'countrySearch',
+            count: 20
         });
-
-        // var region2 = new Input('region');
-        // region2.smartDefaultValue();
-        // region2.livesearch2({
-        //     baseSearch: 'regionSearch2',
-        // });
-
-
        
 });
 

@@ -10,7 +10,7 @@ define([ 'jquery',
     var submittedTokens = mvc.Components.get('submitted');
     
     //bereitet die Subsuche der Inputbox vor..
-    var InputfieldSubsearch = function(baseSearch, currentTokenname, inputfield) {
+    var InputfieldSubsearch = function(baseSearch, searchByValueField, searchByLabelField, currentTokenname, inputfield) {
 
         this.currentValueTokenName = currentTokenname;
         this.inputfieldComponent = inputfield;
@@ -29,21 +29,29 @@ define([ 'jquery',
             return returnValue;
         }
         
-        function createSubSearchQuery(currentValueTokenName, inputfieldSettings) {
+        function createSubSearchQuery(searchByValueField, searchByLabelField, currentValueTokenName, inputfieldSettings) {
     
+            //TODO: search by value oder search by label per Parameter einfügen
             var valueField = inputfieldSettings.get('valueField'); 
             var labelField = inputfieldSettings.get('labelField');
             var tokenName = inputfieldSettings.get('token');
             
             //add current value from inputfield to search
-            var inputFieldSearchString = '|search ' + valueField + '="*$' + currentValueTokenName + '$*" ';
+            var inputFieldSearchByValueString = '|search ' + valueField + '="*$' + currentValueTokenName + '$*" ';
+            var inputFieldSearchByLabelString = '|search ' + labelField + '="*$' + currentValueTokenName + '$*" ';
+
+            var inputFieldSearchString = searchByValueField ? inputFieldSearchByValueString : '';
+            inputFieldSearchString = searchByValueField && searchByLabelField ? inputFieldSearchString + ' OR ' : inputFieldSearchString;
+            inputFieldSearchString = searchByLabelField ? inputFieldSearchString + inputFieldSearchByLabelString : inputFieldSearchString;
+            
+
             
             //add already selected values to search
-            inputFieldSearchString += '$' + tokenName + '|excludeSelectedValue$ ';    
+            inputFieldSearchString += '$' + tokenName + '|excludeSelectedValue$ ';
             //prevent double values
-            inputFieldSearchString += '| dedup ' + valueField;
+            inputFieldSearchString += '| dedup ' + valueField + ' ';
             //rename output to value and label
-            inputFieldSearchString += ' | eval value= ' + valueField + ', label=' + labelField + ' | fields value label';
+            inputFieldSearchString += ' | eval value=' + valueField + ' , label=' + labelField + ' | fields value label ';
     
             return inputFieldSearchString
         }
@@ -61,7 +69,7 @@ define([ 'jquery',
         mvc.setFilter("excludeSelectedValue", excludeSelectedValue);
 
         //createSubsearchString
-        var inputFieldSearchString = createSubSearchQuery(currentTokenname, inputfield.settings);
+        var inputFieldSearchString = createSubSearchQuery(searchByValueField, searchByLabelField, currentTokenname, inputfield.settings);
 
         //createSearch
         this.inputFieldSearch = new PostProcessSearchManager({
@@ -160,8 +168,18 @@ define([ 'jquery',
         livesearch: function livesearch(options) {
     
             this.livesearchField = new MultiValueLivesearchField(this.inputfieldComponent, this.currentValueTokenName);
-            this.inputSearchManager = new InputfieldSubsearch(options.baseSearch, this.currentValueTokenName, this.inputfieldComponent, options.dependencies);
+
+            this.searchByValueField = options.searchByValueField == undefined ? true : options.searchByValueField; //default = true
+            this.searchByLabelField = options.searchByLabelField == undefined ? false : options.searchByLabelField; //default = false
+            this.inputSearchManager = new InputfieldSubsearch(options.baseSearch, this.searchByValueField, this.searchByLabelField, this.currentValueTokenName, this.inputfieldComponent);
+            this.count = options.count || 10;
+
     
+            this.searchResults = this.inputSearchManager.data('preview', {
+                output_mode: 'json',
+                count: this.count
+            });
+
             //Da results.on(data) nicht feuert, wenn es keine Ergebnisse gibt, 
             //brauchen wir diese sonderfall behandlung :(
             this.inputSearchManager.on('search:done', function(state, job){
@@ -170,10 +188,6 @@ define([ 'jquery',
                 }
             }.bind(this));
     
-            this.searchResults = this.inputSearchManager.data('preview', {
-                output_mode: 'json',
-               count: 10
-            });
             
             this.searchResults.on("data", function(results){
                 var newChoices = this.searchResults.hasData() ? this.searchResults.data().results.slice() : [];

@@ -105,7 +105,8 @@ Die Subsuche für die Inputfelder greift auf die Felder fieldForValue und fieldF
 
 | parameter           | type               | optional | description                           |
 | ---------           | -------------------| ---------| --------------------------------------|
-| `baseSearch`        | string             | false    | ID of the base search |
+| `baseSearch`        | string             | false    | ID of the base search                 |
+| `count`             | number             | true     | number of result, default = 10        |
 
 ### use:
 ```javascript
