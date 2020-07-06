@@ -59,21 +59,20 @@
       </input>
     </panel>
      <panel>
+      <!--TODO: leider müssen aktuell fieldForValue und fieldForLabel einfache Strings sein (ohne - und blank)
+      -->
       <search id="countrySearch">
         <query>
-          | inputlookup countryList.csv | search $region$ | rename "country-code" as countryCode| fields name countryCode
+          | inputlookup countryList.csv | search $region$ | rename "alpha-2" as alpha2 | fields name alpha2
         </query>
       </search>
-      <!--TODO: leider müssen aktuell fieldForValue und fieldForLabel gleich sein oder inhalte von fieldForLabel müssen sich auch in fieldForValue finden lassen
-      in zukunft sollte die extension aber damit umgehen können. ggf. mit extra konfiguration...
-      -->
       <input id="country" type="multiselect" token="country">
         <label>Land</label>
-        <fieldForValue>name</fieldForValue>
+        <fieldForValue>alpha2</fieldForValue>
         <fieldForLabel>name</fieldForLabel>
-         <prefix>(</prefix>
+        <prefix>(</prefix>
         <suffix>)</suffix>
-         <valuePrefix>name="</valuePrefix>
+        <valuePrefix>name="</valuePrefix>
         <valueSuffix>"</valueSuffix>
         <delimiter> OR </delimiter>
         <choice value="*">Alle</choice>
