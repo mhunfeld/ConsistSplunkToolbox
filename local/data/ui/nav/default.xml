@@ -1,12 +1,7 @@
 <nav search_view="search">
 
   <view name="overview" default="true"/>
-  
-  <collection label="Components">
-    <view name="components_map"/>
-    <view name="components_filterprofiles"/>
-    <view name="components_timerangeSlider"/>
-  </collection>
+
   <collection label="Extensions">
     <view name="extensions_tables"/>
     <view name="extensions_inputs"/>

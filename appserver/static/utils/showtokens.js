@@ -4,7 +4,7 @@ require.config({
     }
 });
 
-require(['splunkjs/mvc/simplexml/ready!', 'css!app/simple_xml_examples/showtokens.css'], function() {
+require(['splunkjs/mvc/simplexml/ready!'], function() {
     var _ = require('underscore');
     var $ = require('jquery');
     var Backbone = require('backbone');
