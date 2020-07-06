@@ -194,8 +194,8 @@ define([
             items: "> button",
             update: function() {
                 //get current sorting from input (buttons/label)
-                var sortedInput = $(this).find('[data-test="label"]').map(function(){
-                    return $.trim($(this).text());
+                var sortedInput = $(this).find('[data-test-value]').map(function(){
+                    return $.trim($(this).attr('data-test-value'));
                 }).get();
                 //set current input as token (starts new search)
                 defaultTokens.set(tokenName, sortedInput);
