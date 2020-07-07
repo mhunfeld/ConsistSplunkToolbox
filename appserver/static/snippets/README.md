@@ -1,2 +1,0 @@
-# Reusable Code-Snippets ConsistSplunkToolbox
-
