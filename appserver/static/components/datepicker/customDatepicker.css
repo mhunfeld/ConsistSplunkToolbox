@@ -1,0 +1,50 @@
+/*Daterangepicker
+*overwrite bootstrap-settings*/
+.daterangepicker .table-condensed td, .daterangepicker .table-condensed th {
+    padding: unset;
+  }
+
+.daterangepicker td.active {
+  background-color: #5cc05c !important;
+}
+
+.datepicker {
+  padding: 5px 14px;
+  display: inline-block;
+  height: 20px;
+  font-size: 14px;
+  color: rgb(92, 103, 115);
+
+  background-color: rgb(247, 248, 250);
+    color: rgb(92, 103, 115);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.1);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(195, 203, 212);
+    border-image: initial;
+    border-radius: 3px;
+    transition: background 0.2s ease 0s, border 0.2s ease 0s, box-shadow 0.2s ease 0s, text-decoration 0.2s ease 0s;
+}
+
+.datepicker-input span {
+  padding: 0 5px;
+}
+
+.datepicker.dark {
+    background-color: rgb(92, 103, 115);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(43, 48, 51);
+    border-image: initial;
+    transition: background 0.2s ease 0s, border 0.2s ease 0s, box-shadow 0.2s ease 0s, text-decoration 0.2s ease 0s;
+}
+
+.daterangepicker.dark, .daterangepicker.dark .calendar-table {
+    background-color: rgb(92, 103, 115);
+    color: rgb(255, 255, 255);
+}
+
+.daterangepicker.dark .off{
+  background-color: unset;
+}

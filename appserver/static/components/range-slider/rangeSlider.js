@@ -66,6 +66,7 @@ define([
             this.defaultTokens.set(this.token, tokenValue);
             this.defaultTokens.set('form.' + this.token, tokenValue);
 
+            //TODO: zusätzlich prüfen: "searchWhenChanged=true"
             if(!this.submitButton) {
                 this.submitTokens(tokenValue);
             }
