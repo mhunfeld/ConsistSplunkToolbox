@@ -4,18 +4,18 @@ define([
     'splunkjs/mvc/baseinputview',
     'splunkjs/mvc',
     '../../utils/theme-utils.js',
-    'css!./timeRangeSlider.css'
+    'css!./rangeSlider.css'
 ], function ($, _, BaseInputView, mvc, themeUtils) { 
 
-    var TimerangeSlider = BaseInputView.extend({
+    var RangeSlider = BaseInputView.extend({
 
-        sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="time-slider <%=theme%>" id=<%=id%> />'),
+        sliderTemplate: _.template(' <input type="range" min=<%=min%> max=<%=max%> value=<%=value%> step=<%=step%> class="range-slider <%=theme%>" id=<%=id%> />'),
         labelTemplate: _.template('<label><%=label%></label>'),
-        valueLabelTemplate: _.template('<span class="time-slider-value <%=theme%>"><%=labelPrefix%> <%=value%> <%=labelSuffix%></span>'),
+        valueLabelTemplate: _.template('<span class="range-slider-value <%=theme%>"><%=labelPrefix%> <%=value%> <%=labelSuffix%></span>'),
 
         tagName: 'div',
         
-        className: 'time-slider-container',
+        className: 'range-slider-container',
 
         defaultTokens: mvc.Components.getInstance('default'),
 
@@ -35,7 +35,7 @@ define([
         },
 
         events: {
-            'change .time-slider': 'onChange'
+            'change .range-slider': 'onChange'
         },
 
         initialize: function(options) {
@@ -43,7 +43,7 @@ define([
             this.options.value = options.defaultValue;
             this.options.theme = options.theme || themeUtils.getCurrentTheme();
 
-            TimerangeSlider.__super__.initialize.apply(this, arguments);
+            RangeSlider.__super__.initialize.apply(this, arguments);
 
             this.token = options.token;
             this.submitButton = mvc.Components.get('submit');
@@ -56,7 +56,7 @@ define([
             this.$el.append(this.sliderTemplate(this.settings.attributes));
             this.$el.append(this.valueLabelTemplate(this.settings.attributes));
             this.$el.addClass(this.settings.get('theme'));
-            this.$el.find('.time-slider').trigger('change');
+            this.$el.find('.range-slider').trigger('change');
         },
 
         onChange: function(event) {
@@ -84,6 +84,6 @@ define([
 
     });
 
-    return TimerangeSlider;
+    return RangeSlider;
 
 });
