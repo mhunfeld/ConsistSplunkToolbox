@@ -3,7 +3,7 @@ With this script you can add the following extensions to an existing Splunk muli
 
 ### import and init:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.js'], function(Input) {
         var input = new Input('nameOfInput');
     });
 ```
@@ -17,7 +17,7 @@ Important: To use this feature you should configure a default-value in simpleXML
 
 ### use:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.js'], function(Input) {
         var input = new Input('nameOfInput');
         input.smartDefaultValue();
     });
@@ -29,7 +29,7 @@ Adds a button above the multiselect box, that allows user to copy current select
 
 ### use:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.js'], function(Input) {
         var input = new Input('nameOfInput');
         input.applyCopyToClipboard();
     });
@@ -41,7 +41,7 @@ user can paste a list of values to multiselect box
 
 ### use:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.js'], function(Input) {
         var input = new Input('nameOfInput');
         input.applyCopyToClipboard();
     });
@@ -54,7 +54,7 @@ Important: To use this feature you should configure a default-value in simpleXML
 
 ### use:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.js'], function(Input) {
         var input = new Input('nameOfInput');
         input.refreshable();
     });
@@ -65,34 +65,13 @@ ___
 user can sort entries by drag and drop to a specific order. 
 Not neccessary for filterfields, but maybe useful if the multifield is used for another porpose (tableColumnchooser)
 
+WARNING: Works only with fixed choices, not with a search
+
 ### use:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.js'], function(Input) {
         var input = new Input('nameOfInput');
         input.sortable();
-    });
-```
-
-___
-
-## addReplaceableSearchCommand
-setzt den übergebenen Wert in übergebene Token, wenn kein Defaultwert in der Inputbox ausgewählt ist.
-Wird z. B. genutzt, um einen Suchstring dynamisch aufzubauen, falls eine Suche durch zu viele Filter einen zu großen Umfang hat (und lange dauert)
-Beispiel: ein Filter sucht nach "Gattung", Gattung wird jedoch nur zum Resultset hinzugefügt, damit dieser Filter funktioniert.
-In diesem Fall wird (latest(Gattung)) nur zum Suchstring hinzugefügt, falls auch ein Wert im Filter enthalten ist (!= defaultwert)
-
-### parameters:
-
-| parameter           | type               | optional | description                           |
-| ---------           | -------------------| ---------| --------------------------------------|
-| `searchcommand`     | string             | false    | ID of the base search |
-| `tokenname`         | strings            | false    | if the multivalue field should limit its results to selected value of another field |
-
-### use:
-```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
-        var input = new Input('nameOfInput');
-        input.addReplaceableSearchCommand('searchcommand', 'tokenname');
     });
 ```
 ___
@@ -110,7 +89,7 @@ Die Subsuche für die Inputfelder greift auf die Felder fieldForValue und fieldF
 
 ### use:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/input/input.js'], function(Input) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.js'], function(Input) {
         var input = new Input('nameOfInput');
         input.livesearch({
             baseSearch: 'baseSearch'
