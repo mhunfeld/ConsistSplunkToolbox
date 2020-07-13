@@ -2,9 +2,9 @@ define([
     'jquery',
     'underscore',
     'splunkjs/mvc',
-    '/static/app/ConsistSplunkToolbox/extensions/inputs/livesearch.js',
-    'css!/static/app/ConsistSplunkToolbox/extensions/inputs/inputfield.css'
-], function ($, _, mvc, livesearch, livesearch2) { 
+    './livesearch',
+    'css!./inputfield.css'
+], function ($, _, mvc, livesearch) { 
 
 
     var defaultTokens = mvc.Components.get('default');

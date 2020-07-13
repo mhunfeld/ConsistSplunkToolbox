@@ -37,8 +37,8 @@ define([ 'jquery',
             var tokenName = inputfieldSettings.get('token');
             
             //add current value from inputfield to search
-            var inputFieldSearchByValueString = valueField + '="*$' + currentValueTokenName + '$*" ';
-            var inputFieldSearchByLabelString = labelField + '="*$' + currentValueTokenName + '$*" ';
+            var inputFieldSearchByValueString = valueField + '=*$' + currentValueTokenName + '$* ';
+            var inputFieldSearchByLabelString = labelField + '=*$' + currentValueTokenName + '$* ';
 
             var inputFieldSearchString = '|search ';
             inputFieldSearchString += searchByValueField ? inputFieldSearchByValueString : '';
@@ -74,6 +74,7 @@ define([ 'jquery',
 
         //createSearch
         this.inputFieldSearch = new PostProcessSearchManager({
+            id: baseSearch + "_subsearch",
             managerid: baseSearch,
             search: inputFieldSearchString
         }, {tokens: true});
@@ -123,8 +124,8 @@ define([ 'jquery',
                defaultTokens.set(currentValueTokenName, currentVal);
                submittedTokens.set(currentValueTokenName, currentVal);
                //event aufhalten, damit unser input erhalten bleibt
-               event.stopPropagation();
-               console.log(new Date().valueOf());
+            //    event.stopPropagation();
+            //    console.log(new Date().valueOf());
                return;
             } 
         }, 1000));
