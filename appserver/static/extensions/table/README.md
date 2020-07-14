@@ -69,22 +69,6 @@ Initialisiation of the table of rows toggler in javascript:
     });
 ```
 
-
-### use:
-
-___
-## addDrilldownRowMarker
-marks a selected row and sets a token with a selected value which cab be use for drilldown in another visualisation. In the screenshot below you can see a hovered row und the associated marker in a map:
-
-
-WARNNG: only useful with a map
-
-![choose columns of table](./screenshots/tableRowMarker.PNG)
-
-this feature needs configuration in simpleXML and javascript!
-
-### use: 
-
 ___
 ## addColumnChooser
 
@@ -117,5 +101,3 @@ ___
 # TODO
 
 - toggle number of table rows: make steps configurable, default "10 25 50 100"
-- drilldownMarker: refactor 3 parameters to a config-object: column, token, searchToken:
-.addDrilldownRowMarker("Wagennummer", "selected_event", "put_first_tok")
