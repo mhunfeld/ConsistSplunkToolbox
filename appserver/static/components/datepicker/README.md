@@ -1,50 +1,73 @@
-# Custom Datepicker
-With this script you can convert a Splunk text input field to a custom date picker. The datepicker can be configured as single date or as date range picker.
+# Datepicker
 
-Datepicker as single date:
+Mit dem Datepicker kann schnell ein Datum ausgewählt und in Tokens weiterverwendet werden (Forms/Suchen). Der Datepicker kann für die Auswahl eines einzelnen Datum oder einer Zeitspanne (von/bis) konfiguriert werden. 
 
-![datepicker as single date](./screenshots/customDatepickerAsSingle.PNG)
+Der Datepicker nutzt im Hintergrund eine vorgefertigte Komponente: http://www.daterangepicker.com/ Die Datepicker-Komponente kann sehr spezifisch konfiguriert werden. Aktuell werden nur einfache Features zur Auswahl eines Datums und einer Zeitspanne unterstützt. In Zukunft können jedoch weitere Optionen aktiviert werdne.
+Der Datepicker wurde als SimpleSplunkView implementiert und wird deshalb in Javascript initialisiert. Allerdings wurde das bekannte Verhalten von Inputs aus SimpleXML implementiert, sodass die Konfiguration ähnlich zu Inputs in SimpleXML läuft.
 
-Datepicker as range:
+Folgende Eigenschaften aus SimpleXML wurden übertragen:
+- Theming in dark mode / light mode
+- es kann ein Token mit dem ausgewählten Wert belegt werden, bei Auswahl einer Range wird earliest und latest im Token als epoch timestamp gesetzt.
+- dieser wird je nach Konfiguration des Dashbaord (Standard Splunk Verhalten) in das default, submitted und/oder url Tokenmodel übertragen
+- auch der form.token wird gesetzt
 
-![datepicker as date range](./screenshots/customDatepickerAsRange.PNG)
 
-The selected date is saved as epoch timestamp in the token of the splunk inputfield. With the Rangepicker, the start time is saved in token.earliest and the end time in token.latest (as in the splunk timepicker)
-
+## Konfiguration: 
 
 
-### import and init:
+https://docs.splunk.com/DocumentationStatic/WebFramework/1.5/compref_baseview.html
+https://docs.splunk.com/DocumentationStatic/WebFramework/1.5/compref_simplesplunk.html 
+
+
+zusätzlich wurden weitere Optionen hinzugefügt:
+
+| parameter           | type               | optional | default             | description                           |
+| ---------           | -------------------| ---------| --------------------| --------------------------------------|
+| `label`             | string             | true     | -                   | label for this input                  |
+| `token`             | string             | true     | -                   | name of token for this input          |
+
+
+
+## use: 
+
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/customDatepicker/customDatepicker.js'], function(Datepicker) {
-        //as single
-        Daterangepicker.asSingleDate('in_austrittKorrektur', 
-            {maxDate: true, 
-            timePicker: true, 
-            timePicker24Hour: true});
+   require([
+    'underscore',
+    'jquery',
+    '/static/app/ConsistSplunkToolbox/components/datepicker/datepicker.js',
+    '/static/app/ConsistSplunkToolbox/utils/showtokens.js',
+    'splunkjs/mvc/simplexml/ready!'
+], function( 
+        _,
+        $,
+        Datepicker
+    ){
 
-        //as Range
-        Daterangepicker.asRange('in_timeFilter', {opens: 'right'});
-    
+        /*base config as single date*/
+        var singelDatepicker = new Datepicker({
+            id: 'customSingleDatepicker',
+            token: 'customdate_tok',
+            default: 'now'
+        });
+        
+
+        singelDatepicker.render();
+
+        $('#customSingleDatepicker').append(singelDatepicker.el);
+
+        /* base config as date range picker*/ 
+        var rangeDatepicker = new Datepicker({
+            id: 'customRangeDatepicker',
+            token: 'customrangedate_tok',
+            asRange: true
+        });
+        
+
+        rangeDatepicker.render();
+
+        $('#customRangeDatepicker').append(rangeDatepicker.el);
+
+
+
     });
 ```
-
-### SimpleXML:
-```javascript
-
-    <input id="in_austrittKorrektur" type="text" token="save_austrittKorrektur_tok">
-        <label>Geofence Austritt Korrektur</label>
-        <change>
-          <condition match="...">
-            ...
-          </condition>
-        </change>
-    </input>
-
-
-    <input id="in_timeFilter" type="text" token="timeFilter_tok" searchWhenChanged="true">
-        <label>Betrachtungszeitraum</label>
-    </input>
-```
-
-___
-
