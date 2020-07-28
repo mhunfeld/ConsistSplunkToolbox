@@ -33,13 +33,11 @@ define([
 
     var Datepicker = BaseInputView.extend({
 
-        inputTemplate: _.template('<span class="icon-calendar datepicker-input"><span class="date-label"></span> <i class="icon-triangle-down-small"></i></span>'),
+        inputTemplate: _.template('<div class="datepicker input"><span class="icon-calendar datepicker-input"><span class="date-label"></span> <i class="icon-triangle-down-small"></i></span></div>'),
 
         labelTemplate: _.template('<label><%=label%></label>'),
 
         tagName: 'div',
-        
-        className: 'datepicker input',
         
         defaultTokens: mvc.Components.getInstance('default'),
 
@@ -127,7 +125,7 @@ define([
                 this.$el.append(this.inputTemplate(this.settings.attributes));
                 this.$el.addClass(this.settings.get('theme'));
 
-                this.daterangepicker = this.$el.daterangepicker(this.datepickerOptions);
+                this.daterangepicker = this.$el.find('.datepicker').daterangepicker(this.datepickerOptions);
                 this.daterangepicker.on("apply.daterangepicker", this.onChange.bind(this));
                 $('.daterangepicker').addClass(this.settings.get('theme'));
 
