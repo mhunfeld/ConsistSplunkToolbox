@@ -2,8 +2,8 @@ define([
     'jquery',
     'underscore',
     'splunkjs/mvc',
-    './livesearch',
-    'css!./inputfield.css'
+    './livesearch.js',
+    'css!./multiselect.css'
 ], function ($, _, mvc, livesearch) { 
 
 

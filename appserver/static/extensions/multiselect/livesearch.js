@@ -2,7 +2,7 @@ define([ 'jquery',
 'underscore',
 'splunkjs/mvc',
 'splunkjs/mvc/postprocessmanager',
-'css!./inputfield.css'
+'css!./multiselect.css'
 ], function($, _, mvc, PostProcessSearchManager){
 
 
