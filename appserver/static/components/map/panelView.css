@@ -1,0 +1,30 @@
+.element-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.element-view:hover .menus {
+    display: block;
+}
+
+.element-view:hover .element-body {
+    border-bottom: 1px solid #c3cbd4;
+}
+
+.element-header {
+    align-self: flex-start;
+}
+
+.element-footer {
+    align-self: flex-end;
+}
+
+.element-body {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.element-body > div {
+    height: 100%;
+}

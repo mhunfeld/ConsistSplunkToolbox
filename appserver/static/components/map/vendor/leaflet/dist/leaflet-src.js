@@ -4091,9 +4091,7 @@ var Map = Evented.extend({
 	// map initialization methods
 
 	_initContainer: function (id) {
-		console.log(id);
 		var container = this._container = DomUtil.get(id);
-		console.log(container);
 		if (!container) {
 			throw new Error('Map container not found.');
 		} else if (container._leaflet_id) {

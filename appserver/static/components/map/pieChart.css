@@ -1,0 +1,43 @@
+.pie {
+    /* Basic layout */
+    display: inline-block;
+    border-radius: 50%;
+  
+    border: 5px solid rgba(255,255,255,.35);
+    /*box-shadow: 0 .075em .2em .05em rgba(0,0,0,.25);*/
+  
+    background-origin: border-box; 
+
+    font-size: 14px !important;
+    font-weight: bolder !important;
+    font-family: sans-serif;
+    color: white;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 85%;
+    position:absolute;
+  }
+
+  .legendCircle {
+      display: inline;
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.35);
+    background-origin: border-box; 
+    font-size: 14px;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: white;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 85%;
+  }
+
+  .legenditem > .legenditemLabel {
+    display: inline;
+    margin: 2px;
+}
