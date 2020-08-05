@@ -14,7 +14,6 @@ The following subviews are currently available:
 - ClusterMarkerView
 - RouteView
 - MarkerView
-- Geofence-View
 
 
 The subviews are described in more detail below.
