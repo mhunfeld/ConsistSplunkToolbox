@@ -140,25 +140,6 @@ The Helpdesk-Button will be automatically inserted after ".dashboard-title" beca
 
 ___
 
-# GeofencesView
-Add geofences to the map. This view is not based on a splunk search, but loads the geofences as a KMZ file via a REST end point
-
-### import and init:
-```javascript
-    require([
-        '/static/app/ConsistSplunkToolbox/components/map/GeofencesView.js'
-    ], function(GeofencesView) {
-        new GeofencesView('map1', 'geofenceGroupForPreview_tok');
-    });
-```
-
-| option              | type               | optional | description                           |
-| ---------           | -------------------| ---------| --------------------------------------|
-| `map-id`                | string             | true     | ID of the view, with this id you can get the view from the Splunk-registry |
-| `el`                | string             | false    | html-element for view, the Map will be appended to HTML-Element of el |
-
-___
-
 # PopupRenderer:
 Just as the appearance of a column can be influenced with the BaseCellRenderer for a table, the appearance of the popup in a map can be adjusted with the BasePopupRenderer.
 
