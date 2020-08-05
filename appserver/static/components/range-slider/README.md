@@ -1,23 +1,23 @@
 # Range Slider
 
-Mit dem Range Slider können einfache Werte in einem bestimmte Bereich (Range) abgefragt werden. Der Range Slider kann auch für relative Zeitangeben (letzte 24 h etc.) verwendet werden. Der Range Slider wurde als SimpleSplunkView implementiert und wird deshalb in Javascript initialisiert. Allerdings wurde das bekannte Verhalten von Inputs aus SimpleXML implementiert, sodass die Konfiguration ähnlich zu Inputs in SimpleXML läuft.
+The range slider can be used to select simple values ​​in a certain range. The range slider can also be used for relative times (last 24 hours etc.). The range slider has been implemented as SimpleSplunkView and is therefore initialized in Javascript. However, the known behavior of inputs from SimpleXML has been implemented, so that the configuration is similar to inputs in SimpleXML.
 
-Folgende Eigenschaften aus SimpleXML wurden übertragen:
+The following properties from SimpleXML were transferred:
 - Theming in dark mode / light mode
-- es kann ein Token mit dem ausgewählten Wert belegt werden
-- dieser wird je nach Konfiguration des Dashbaord (Standard Splunk Verhalten) in das default, submitted und/oder url Tokenmodel übertragen
-- auch der form.token wird gesetzt
-- es können prefixes und suffixes bestimmt werden, sodass der Token direkt in Suchen weiterverwendet werden kann.
+- the selected value can be assigned to a token
+- depending on the configuration of the dashboard (standard splunk behavior), this token value is transferred to the default, submitted and / or url token model
+- the form.token is also set
+- prefixes and suffixes can be determined so that the token can be used directly in searches.
 
 
-## Konfiguration: 
+## Configuration: 
 
 
 https://docs.splunk.com/DocumentationStatic/WebFramework/1.5/compref_baseview.html
 https://docs.splunk.com/DocumentationStatic/WebFramework/1.5/compref_simplesplunk.html 
 
 
-zusätzlich wurden weitere Optionen hinzugefügt:
+additional options have been added:
 
 | parameter           | type               | optional | default             | description                           |
 | ---------           | -------------------| ---------| --------------------| --------------------------------------|
@@ -58,7 +58,7 @@ zusätzlich wurden weitere Optionen hinzugefügt:
             labelSuffix: '$labelSuffix$'
         }, {tokens: true});
 
-        //ANMERKUNG: Hier können Tokens, wie in SimpleXML mit $$ verwendet werden. Diese aktualisieren sich auch automatisch, wenn sich der Wert ändert.
+        // NOTE: Here you can use tokens like in SimpleXML with $$. These also update automatically when the value changes.
 
         //Rendern des Sliders
         testSlider.render();
