@@ -4,7 +4,7 @@ With this script you can add the following extensions to an existing Splunk tabl
 
 ### import and init:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/table/table.js'], function(Table) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/table/table.js'], function(Table) {
         var table = new Table('nameOfTable');
     });
 ```
@@ -14,12 +14,9 @@ ___
 
 shortens column headers of a table and show the long information in a tooltip:
 
-
-![rename table header with tooltip](./screenshots/renameTableHeaderWithTooltip.PNG)
-
 ### use:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/table/table.js'], function(Table) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/table/table.js'], function(Table) {
 
         var table = new Table('nameOfTable');
 
@@ -60,7 +57,7 @@ and use this token for the count option of the table:
 Initialisiation of the table of rows toggler in javascript:
 
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/table/table.js'], function(Table) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/table/table.js'], function(Table) {
 
         var table = new Table('nameOfTable');
 
@@ -68,14 +65,6 @@ Initialisiation of the table of rows toggler in javascript:
         table.addNumberOfTableRowsToggler('tableRowsCountTok');
     });
 ```
-
-___
-## addColumnChooser
-
-![choose columns of table](./screenshots/tableColumnChooser.PNG)
-
-### use: 
-
 
 ___
 ## addFixedColumn
@@ -88,7 +77,7 @@ freezes first column of table
 
 
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/table/table.js'], function(Table) {
+    require(['/static/app/ConsistSplunkToolbox/extensions/table/table.js'], function(Table) {
 
         var table = new Table('nameOfTable');
 

@@ -21,7 +21,7 @@ The subviews are described in more detail below.
 
 ### import and init:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/map/maps.js'], function(MapView) {
+    require(['/static/app/ConsistSplunkToolbox/components/map/maps.js'], function(MapView) {
 
          var map = new MapView.MapView({
             id: 'map1',
@@ -62,7 +62,7 @@ It is also possible to display different groupings of markers in a PieChart clus
 
 ### import and init:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/map/CSSClusterMarkerView.js'], function(WagonClusterMarkerView) {
+    require(['/static/app/ConsistSplunkToolbox/components/map/CSSClusterMarkerView.js'], function(WagonClusterMarkerView) {
         var wagonClusterMarkers = new WagonClusterMarkerView({
             id: 'mapCluster',
             managerid: 'map_search', 
@@ -91,7 +91,6 @@ The options from SimpleSplunkView can also be used: https://docs.splunk.com/Docu
 
 ### search:
 ```javascript
-| where latitude != "db_rsi_wi_fd_emptyValue" AND longitude != "db_rsi_wi_fd_emptyValue"
 | eval id = Wagennummer
 | eval lastTimestamp  = strftime(_time, "%d.%m.%Y %H:%M:%S")
 | eval markerState = case(moveState=="Fahrend", "Fahrend", moveState=="Stehend", "Stehend/Parkend", moveState=="Parkend", "Stehend/Parkend", true(), "Unbekannt")
@@ -119,7 +118,7 @@ With this script you can add a dialog to contact helpdesk.
 
 ### import and init:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/feedbackEmail/feedbackEmail.js'], function(feedbackEmail) {
+    require(['/static/app/ConsistSplunkToolbox/components/feedbackEmail/feedbackEmail.js'], function(feedbackEmail) {
         feedbackEmail.addFeedbackDialog();
     });
 ```
@@ -133,7 +132,7 @@ With this script you can add a dialog to contact helpdesk.
 
 ### import and init:
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/feedbackEmail/feedbackEmail.js'], function(feedbackEmail) {
+    require(['/static/app/ConsistSplunkToolbox/components/feedbackEmail/feedbackEmail.js'], function(feedbackEmail) {
         feedbackEmail.addFeedbackDialog();
     });
 ```
@@ -148,7 +147,7 @@ Add geofences to the map. This view is not based on a splunk search, but loads t
 ### import and init:
 ```javascript
     require([
-        '/static/app/db_rsi_wi_1web_u/map/GeofencesView.js'
+        '/static/app/ConsistSplunkToolbox/components/map/GeofencesView.js'
     ], function(GeofencesView) {
         new GeofencesView('map1', 'geofenceGroupForPreview_tok');
     });
@@ -173,7 +172,7 @@ The following subviews can be used with a BasePopupRenderer:
 - Routeview (with marker)
 
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/map/CSSClusterMarkerView.js'], function(WagonClusterMarkerView) {
+    require(['/static/app/ConsistSplunkToolbox/components/map/CSSClusterMarkerView.js'], function(WagonClusterMarkerView) {
 
         //get baseRenderer from view and extend to own conditionss
         var WatiPopupRenderer = WagonClusterMarkerView.BasePopupRenderer.extend({
@@ -210,7 +209,7 @@ The following subviews can be used with a BasePopupRenderer:
 BaseMapsDataView is a SimpleSplukView with some extensions to show search result on a MapView
 
 ```javascript
-    require(['/static/app/db_rsi_wi_1web_u/map/CSSClusterMarkerView.js'], function(WagonClusterMarkerView) {
+    require(['/static/app/ConsistSplunkToolbox/components/map/CSSClusterMarkerView.js'], function(WagonClusterMarkerView) {
 
         //get baseRenderer from view and extend to own conditionss
         var WatiPopupRenderer = WagonClusterMarkerView.BasePopupRenderer.extend({

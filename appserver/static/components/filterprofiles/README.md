@@ -26,7 +26,7 @@ Die fachliche Doku zum Filterprofil befindet sich unter: (confluence...)
 
     ```JAVASCRIPT
         require([
-            '/static/app/db_rsi_wi_1web_u/filterprofile/filterprofile.js',
+            '/static/app/ConsistSplunkToolbox/components/filterprofile/filterprofile.js',
         ], function(
             Filterprofile
         ) { ... });
@@ -35,8 +35,8 @@ Die fachliche Doku zum Filterprofil befindet sich unter: (confluence...)
     ```JAVASCRIPT
         var filterprofiles = new Filterprofile({
             el: '#in_filterprofile',                            //HTML-Anker
-            collection: 'db_rsi_wi_waco_kv_filterprofile/',     //Name der KV-Store Collection
-            kvStoreEndpoint: "/servicesNS/nobody/db_rsi_wi_waco_u/" //Name des KV-Store Endpoints
+            collection: 'filterprofiles/',     //Name der KV-Store Collection
+            kvStoreEndpoint: "endpoint" //Name des KV-Store Endpoints
         });
     ```
 

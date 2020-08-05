@@ -182,6 +182,6 @@ define([
     });
     return ModalView;
 
-    //# sourceURL=db_rsi_wi_stdz_js_modalviewfilterprofile.js
+    //# sourceURL=affFilterModalView.js
 
 });
