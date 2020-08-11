@@ -11,10 +11,10 @@ define(['jquery',
         $, _, mvc, themeUtils) {
 
 
-        var initAll = function(selector, options) {
+        var initAll = function(selector = "", options = {}) {
 
             //wenn kein Selector angegeben wurde, kann der erste Parameter auch ein Options-Objekt sein
-            options = !options && selector && typeof selector == 'object' ? selector : {};
+            options = !options && selector && typeof selector == 'object' ? selector : options;
             //wenn kein selector angegeben wurde, leeren String verwenden.
             selector = selector && typeof selector == 'string' ? selector + ' ' : '';
 
@@ -36,7 +36,7 @@ define(['jquery',
 
             table.getVisualization(function(tableView) {
                 tableView.on('rendered', function() {
-                    initAll('#table');
+                    initAll('#' + tableId, options);
                 });
             });
         }
