@@ -195,7 +195,7 @@ define([
         },
     
         bindDatePickerToInputfieldToken: function(inputfieldToken) {
-            var datePicker = this.$el.data('daterangepicker');
+            var datePicker = this.daterangepicker.data('daterangepicker');
             if(this.isRangeDate) {
                 //set Datepicker if token has changed
                 this.defaultTokens.on('change:form.' + inputfieldToken + '.earliest', function(newIndexName, tokValue, options) {
