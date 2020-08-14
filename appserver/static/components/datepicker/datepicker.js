@@ -115,6 +115,7 @@ define([
             this.token = options.token;
             this.submitButton = mvc.Components.get('submit');
             this.datepickerOptions = !!options.asRange ? this.defaultRangeOptions : this.defaultSingleOptions;
+            this.datepickerOptions = _.extend({}, this.datepickerOptions, options.datepickerOptions)
             this.isRangeDate = !!options.asRange;
         },
 
