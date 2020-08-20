@@ -1,0 +1,17 @@
+.modal {
+    position:fixed;
+    left: 50%;
+    max-width: 1280px;
+    width: unset;
+}
+
+ .modal-header {
+    border-bottom: 1px solid #c3cbd4;
+    padding: 20px;
+}
+
+.modal-body {
+    border-bottom: 1px solid #c3cbd4;
+    padding: 20px;
+    overflow: auto;
+}
