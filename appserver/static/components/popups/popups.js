@@ -2,7 +2,7 @@ define([
     'underscore', 
     'backbone',
     'splunkjs/mvc',
-    'css!./protocolModal.css'
+    'css!./popups.css'
 ], function(_, Backbone, mvc) {
 
     var defaultTokens = mvc.Components.getInstance('default');
