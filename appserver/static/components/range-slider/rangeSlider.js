@@ -47,6 +47,7 @@ define([
 
             this.token = options.token;
             this.submitButton = mvc.Components.get('submit');
+            this.render();
         },
 
         render: function() {
