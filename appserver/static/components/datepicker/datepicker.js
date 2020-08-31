@@ -117,6 +117,8 @@ define([
             this.datepickerOptions = !!options.asRange ? this.defaultRangeOptions : this.defaultSingleOptions;
             this.datepickerOptions = _.extend({}, this.datepickerOptions, options.datepickerOptions)
             this.isRangeDate = !!options.asRange;
+
+            this.render();
         },
 
         render: function() {
