@@ -12,7 +12,7 @@ Popovers basieren eigentlich auf Bootstrap Popovers und können in Splunk Out Of
 
 ### erstellen eines Popovers in SimpleXML/HTML:
 
-```html 
+```xml
     <a href="#" title="See What I Did There?" data-placement="right" data-toggle="popover" data-trigger="click" 
           data-content="hier ist der Inhalt der Popovers">
             <h2>Popover on Click</h2>
@@ -57,3 +57,19 @@ Wenn es viele Popovers mit den gleichen Optionen gibt, kann als 2. Parameter ein
 ___
 
 ## initInTableCellRenderer
+Popovers in Tabellen müssen jeweils nach dem Rendern initialisiert werden. Mit dier Funktion wird eine Initialiseirung bei jedem "on rendered" Event einer Tabelle ausgeführt.
+
+Als Parameter wird die ID der Splunk Tabelle und ein optionales Options-Objekt übergeben.
+
+### Aufruf:
+```javascript
+    //da popovers in tabellen erst nach dem rendern initialisiert werden können, 
+    //müssen wir eine gesonderte Funktion aufrufen, die bei jedem Rendern der Tabelle aufgerufen wird
+    popovers.initInTableCellRenderer('table');
+
+    //alle Elemente mit den übergebenen Optionen konfiguriert
+    //die restlichen Parameter können nach wie vor aus dem HTML übernommen werden (z. B. title und content)
+    popover.initInTableCellRenderer('table', {
+        data-placement: 'bottom'
+    });
+```
