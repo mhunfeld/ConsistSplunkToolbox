@@ -39,6 +39,8 @@ define([
 
         tagName: 'div',
         
+        className: 'input',
+        
         defaultTokens: mvc.Components.getInstance('default'),
 
         submittedTokens: mvc.Components.getInstance('submitted'),
