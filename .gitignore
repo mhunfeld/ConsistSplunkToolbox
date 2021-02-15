@@ -1,2 +1,3 @@
 node_modules/
 appserver/static/htmlDashboard/vendor/*
+*.pyc

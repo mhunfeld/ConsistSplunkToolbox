@@ -5,9 +5,10 @@ define([
     './numberOfTableRowsComponent/numberOfTableRowsToggler.js',
     './tableColumnChooser/tableColumnChooserView.js',
     './fixedColumn/fixedColumn.js',
+    './tableXlsExporter/addExportToXlsText.js',
     'css!./table.css',
     'splunkjs/mvc/simplexml/ready!'
-], function (_, mvc, renameHeader, addNumberOfTableRowsComponent, tableColumnChooser, fixedColumn) {
+], function (_, mvc, renameHeader, addNumberOfTableRowsComponent, tableColumnChooser, fixedColumn, addTableExporter) {
 
     var Table = function(tableComponentId) {
         this.tableComponent =   mvc.Components.get(tableComponentId);
@@ -22,7 +23,7 @@ define([
         return this;
     }    
 
-    _.extend(Table.prototype, renameHeader, addNumberOfTableRowsComponent, tableColumnChooser, fixedColumn);
+    _.extend(Table.prototype, renameHeader, addNumberOfTableRowsComponent, tableColumnChooser, fixedColumn, addTableExporter);
 
 
     return Table;

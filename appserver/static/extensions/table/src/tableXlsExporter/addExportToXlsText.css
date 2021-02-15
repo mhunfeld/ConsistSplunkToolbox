@@ -1,0 +1,9 @@
+.tableExport {
+    float: right;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.tableExport > a {
+   margin-left: 0px !important;
+}
