@@ -119,6 +119,7 @@ define([
             this.datepickerOptions = !!options.asRange ? this.defaultRangeOptions : this.defaultSingleOptions;
             this.datepickerOptions = _.extend({}, this.datepickerOptions, options.datepickerOptions)
             this.isRangeDate = !!options.asRange;
+            this.searchWhenChange = !!options.searchWhenChange;
 
             this.render();
         },
@@ -225,39 +226,52 @@ define([
             console.log('change');
 
             if(this.isRangeDate) {
-                var formattedEarliestDate = picker.startDate.format(this.germanLocale.format);
                 var earliestDate = picker.startDate.unix();
                 this.defaultTokens.set(this.token + ".earliest", earliestDate);
                 this.defaultTokens.set('form.' + this.token + ".earliest", earliestDate);
-
-                var formattedLatestDate = picker.endDate.format(this.germanLocale.format);
+                
                 var latestDate = picker.endDate.unix();
                 this.defaultTokens.set(this.token + ".latest", latestDate);
                 this.defaultTokens.set('form.' + this.token + ".latest", latestDate);
-
+                
+                var formattedEarliestDate = picker.startDate.format(this.germanLocale.format);
+                var formattedLatestDate = picker.endDate.format(this.germanLocale.format);
                 picker.element.find('.date-label').text(formattedEarliestDate + ' - ' + formattedLatestDate);
+
+                if(this.searchWhenChange) {
+                    this.submitTokensRange(earliestDate, latestDate);
+                }
             } else {
                 var formattedDate = picker.startDate.format(this.germanLocale.format);
                 var date = picker.startDate.unix();
                 picker.element.find('.date-label').text(formattedDate);
                 this.defaultTokens.set(this.token, date);
                 this.defaultTokens.set('form.' + this.token, date);
+                //TODO: zusätzlich prüfen: "searchWhenChanged=true"
+                if(this.searchWhenChange) {
+                    this.submitTokensSingle(date);
+                }
             }
-
-            //TODO: zusätzlich prüfen: "searchWhenChanged=true"
-            if(!this.submitButton) {
-                this.submitTokens(date);
-            }
-
             this.settings.set('value', date);
-           // this.render();
         }, 
 
-        submitTokens: function(selectedValue) {
+        submitTokensSingle: function(selectedValue) {
             this.submittedTokens.set(this.token, selectedValue);
             this.submittedTokens.set('form.' + this.token, selectedValue);
 
             this.urlTokens.set('form.' + this.token,  selectedValue);
+            this.urlTokens.pushState(this.urlTokens.encode());
+        },
+
+        submitTokensRange: function(earliest, latest) {
+            this.submittedTokens.set(this.token + ".earliest", earliest);
+            this.submittedTokens.set('form.' + this.token + ".earliest", earliest);
+            this.urlTokens.set('form.' + this.token + ".earliest", earliest);
+
+            this.submittedTokens.set(this.token + ".latest", latest);
+            this.submittedTokens.set('form.' + this.token + ".latest", latest);
+            this.urlTokens.set('form.' + this.token + ".latest", latest);
+
             this.urlTokens.pushState(this.urlTokens.encode());
         }
 
